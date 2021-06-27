@@ -1,2 +1,3 @@
-# battleship-game
-A simple battleship game using SDL2
+# Battleship!
+
+This is (will be) a simple game. Educational purpose only ;D

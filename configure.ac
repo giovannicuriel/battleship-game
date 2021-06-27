@@ -11,7 +11,12 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_CXX
 AC_PROG_CC
 
+PKG_PROG_PKG_CONFIG
+
 # Checks for libraries.
+PKG_CHECK_MODULES([SDL], [
+    sdl2
+])
 
 # Checks for header files.
 
