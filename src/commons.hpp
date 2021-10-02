@@ -20,10 +20,11 @@ struct Area
     bool contains(Point p);
 };
 
-struct Color {
+struct Color
+{
     SDL_Color argb;
-    Color & operator+=(std::vector<u_int8_t> v);
-    Color & operator-=(std::vector<u_int8_t> v);
+    Color &operator+=(std::vector<u_int8_t> v);
+    Color &operator-=(std::vector<u_int8_t> v);
     void copyFrom(std::vector<u_int8_t> v);
 };
 

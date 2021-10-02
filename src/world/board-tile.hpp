@@ -4,20 +4,35 @@
 #include "commons.hpp"
 #include "world/world-object.hpp"
 
-enum BoardTileState {
+enum BoardTileState
+{
     IDLE,
     FADING_IN,
     FADING_OUT,
-    SELECTED
+    SELECTED,
+    DESELECTED,
+    BLOWN_UP
 };
 
-class BoardTile: public WorldObject {
+BoardTileState operator!(BoardTileState state);
+
+struct BoardTileConfig
+{
+    Point origin;
+    Size size;
+    bool hasShip;
+};
+
+class BoardTile : public WorldObject
+{
 protected:
     BoardTileState state;
     Area area;
     Color color;
+    bool hasShip;
+
 public:
-    BoardTile(SDL_Renderer* renderer, Point origin, Size size);
+    BoardTile(SDL_Renderer *renderer, BoardTileConfig config);
     virtual ~BoardTile();
 
     void processEvent(GUIEvent event) override;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "world/world.hpp"
 #include "world/board-tile.hpp"
 #include "gui/window.hpp"
@@ -13,7 +14,12 @@ int main(void)
     {
         for (auto y = 0; y < 8; y++)
         {
-            world.addWorldObject(new BoardTile(window.renderer, Point({x : x * 50, y : y * 50}), Size({x : 50, y : 50})));
+            BoardTile *tile = new BoardTile(window.renderer, {
+                origin : Point({x : x * 50, y : y * 50}),
+                size : Size({x : 50, y : 50}),
+                hasShip : rand() % 2 == 0
+            });
+            world.addWorldObject(tile);
         }
     }
 
