@@ -3,6 +3,7 @@ bin_PROGRAMS = battleship
 
 battleship_SOURCES = \
     commons.cpp \
+    logic/game-logic.cpp \
     gui/window.cpp \
     world/world-object.cpp \
     world/board-tile.cpp \

@@ -4,21 +4,25 @@
 #include "world/board-tile.hpp"
 #include "gui/window.hpp"
 #include "gui/events.hpp"
+#include "logic/game-logic.hpp"
 int main(void)
 {
     World world;
+    GameLogic logic;
     Window window = Window(&world);
+
     window.init();
     // TODO Improve this thing. Try to use unique_ptr or something else
     for (auto x = 0; x < 8; x++)
     {
         for (auto y = 0; y < 8; y++)
         {
-            BoardTile *tile = new BoardTile(window.renderer, {
+            BoardTile *tile = new BoardTile(window.renderer, & logic, {
                 origin : Point({x : x * 50, y : y * 50}),
                 size : Size({x : 50, y : 50}),
                 hasShip : rand() % 2 == 0
             });
+            logic.addBoardTile(tile);
             world.addWorldObject(tile);
         }
     }

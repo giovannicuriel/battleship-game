@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "gui/events.hpp"
+#include "commons.hpp"
 
 class WorldObject {
 protected:
@@ -12,6 +13,7 @@ public:
     virtual ~WorldObject();
     virtual void processEvent(GUIEvent event) = 0;
     virtual void draw() = 0;
+    virtual bool contains(Point point) = 0;
 };
 
 #endif // __WORLD_OBJECT_HPP__

@@ -1,9 +1,10 @@
 #include <iostream>
+#include "logic/game-logic.hpp"
 #include "world/board-tile.hpp"
 
 #define COLOR_INCREMENT 25
 
-BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) : WorldObject(renderer)
+BoardTile::BoardTile(SDL_Renderer *renderer, GameLogic * logic, BoardTileConfig config) : WorldObject(renderer)
 {
     this->area.rect = {
         x : config.origin.x,
@@ -19,10 +20,15 @@ BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) : WorldObje
     };
     this->state = DESELECTED;
     this->hasShip = config.hasShip;
+    this->logic = logic;
 }
 
 BoardTile::~BoardTile()
 {
+}
+
+bool BoardTile::contains(Point point) {
+    return this->area.contains(point);
 }
 
 void BoardTile::processEvent(GUIEvent event)
@@ -32,6 +38,7 @@ void BoardTile::processEvent(GUIEvent event)
         if (this->hasShip)
         {
             this->state = BLOWN_UP;
+            logic->blowUpTile(this);
         }
         else
         {
@@ -81,3 +88,6 @@ BoardTileState operator!(BoardTileState state)
         return BoardTileState::IDLE;
     }
 }
+
+
+bool BoardTile::hidesShip() { return this->hasShip; };

@@ -18,7 +18,9 @@ void World::addWorldObject(WorldObject * object)
 void World::processEvent(GUIEvent event)
 {
     for (auto obj: this->objects) {
-        obj->processEvent(event);
+        if (obj->contains(event.point)) {
+            obj->processEvent(event);
+        }
     }
 }
 
