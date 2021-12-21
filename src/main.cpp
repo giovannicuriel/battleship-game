@@ -5,6 +5,7 @@
 #include "gui/window.hpp"
 #include "gui/events.hpp"
 #include "logic/game-logic.hpp"
+
 int main(void)
 {
     World world;
@@ -52,3 +53,108 @@ int main(void)
     }
     return 0;
 }
+
+
+// #include <list>
+
+// struct Point
+// {
+//     int x;
+//     int y;
+// };
+
+// std::ostream & operator<<(std::ostream & out, const Point & p) {
+//     out << "(" << p.x << ", " << p.y << ")";
+//     return out;
+// }
+
+// struct ConvexPolygon {
+//     std::list<Point> points;
+//     bool contains(const Point &p) {
+//         Point current = {x : 0, y : 0};
+//         for (auto it : points) {
+//             if (it.x < p.x) {
+//                 current.x += -1;
+//             } else if (it.x > p.x) {
+//                 current.x += 1;
+//             }
+
+//             if (it.y < p.y) {
+//                 current.y += -1;
+//             } else if (it.y > p.y) {
+//                 current.y += 1;
+//             }
+//         }
+//         if (current.x != 0 && current.y != 0) {
+//             return false;
+//         }
+//         return true;
+//     }
+// };
+
+
+// // struct Predicate {
+// //     virtual bool operator()() = 0;
+// // };
+
+// // class MouseClickedInside : public Predicate {
+// // protected:
+// //     int x;
+// //     int y;
+// // public:
+// //     MouseClickedInside(int x, int y) : x(x), y(y) {}
+// //     bool operator()() {
+// //         std::cout << "Mouse event at " << x << " " << y << "\n";
+// //         return true;
+// //     }
+// // };
+
+
+// // class EventData;
+
+
+// // class Subscriber {
+// // public:
+// //     Subscriber();
+// //     virtual ~Subscriber();
+// //     virtual void onEvent(EventData *data) = 0;
+// // };
+
+// // struct Subscription {
+// //     Subscriber * m_Subscriber;
+// //     Subscription * when(Predicate * predicate);
+// // }
+
+// // class Databroker
+// // {
+// // protected:
+// //     std::list<Subscriber> m_Subscribers;
+
+// // public:
+// //     Databroker();
+// //     virtual ~Databroker();
+// //     void addSubscriber(Subscriber *subscriber, Delegate *delegate, std::string topic);
+// //     void sendEvent(std::string topic, EventData * data);
+// // };
+
+
+// void testIsInside(const Point &p, ConvexPolygon &polygon) {
+//     std::cout << "Point " << p << " is inside: " << polygon.contains(p) << "\n";
+// }
+
+// int main(void)
+// {
+//     std::cout << "Hello, World!" << std::endl;
+//     ConvexPolygon polygon;
+//     polygon.points.push_back({x : 1, y : 1});
+//     polygon.points.push_back({x : 3, y : 11});
+//     polygon.points.push_back({x : 14, y : 14});
+//     polygon.points.push_back({x : 11, y : 3});
+
+//     testIsInside({x : 0, y : 0}, polygon);
+//     testIsInside({x : 1, y : 1}, polygon);
+//     testIsInside({x : 1, y : 1}, polygon);
+//     testIsInside({x : 1, y : 1}, polygon);
+//     testIsInside({x : 1, y : 1}, polygon);
+//     return 0;
+// }
