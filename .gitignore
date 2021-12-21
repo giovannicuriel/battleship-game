@@ -97,5 +97,6 @@ Makefile
 
 # Le binary
 src/battleship
+tests/battleship-tests
 .vscode
 config.h
