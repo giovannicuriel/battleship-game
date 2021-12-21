@@ -10,6 +10,8 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AM_PROG_AR
+AC_PROG_RANLIB
 
 PKG_PROG_PKG_CONFIG
 
@@ -25,5 +27,6 @@ PKG_CHECK_MODULES([SDL], [
 # Checks for library functions.
 
 AC_CONFIG_FILES([Makefile
-                 src/Makefile])
+                 src/Makefile
+                 src/event-broker/Makefile])
 AC_OUTPUT

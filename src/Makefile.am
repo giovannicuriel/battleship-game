@@ -1,6 +1,8 @@
 AM_CXXFLAGS= $(SDL_CFLAGS)
 bin_PROGRAMS = battleship
 
+SUBDIRS = event-broker .
+
 battleship_SOURCES = \
     commons.cpp \
     logic/game-logic.cpp \
@@ -10,4 +12,4 @@ battleship_SOURCES = \
     world/world.cpp \
     main.cpp
 
-battleship_LDADD = $(SDL_LIBS)
+battleship_LDADD = $(SDL_LIBS) event-broker/libeventbroker.a
