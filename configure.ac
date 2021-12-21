@@ -20,6 +20,12 @@ PKG_CHECK_MODULES([SDL], [
     sdl2
 ])
 
+# TODO make it conditional
+PKG_CHECK_MODULES([GTEST], [
+    gtest_main,
+    gmock
+])
+
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
@@ -27,6 +33,6 @@ PKG_CHECK_MODULES([SDL], [
 # Checks for library functions.
 
 AC_CONFIG_FILES([Makefile
-                 src/Makefile
-                 src/event-broker/Makefile])
+                 tests/Makefile
+                 src/Makefile])
 AC_OUTPUT

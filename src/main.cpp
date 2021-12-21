@@ -8,6 +8,7 @@
 
 #include "event-broker/event-broker.hpp"
 #include "event-broker/subscriber.hpp"
+#include "event-broker/subscription-handler-factory.hpp"
 #include <unistd.h>
 
 class SimpleSubscriber: public Subscriber {
@@ -20,7 +21,8 @@ public:
 };
 
 int main(void) {
-    EventBroker eb { };
+
+    EventBroker eb { new SubscriptionHandlerFactoryImpl() };
     SimpleSubscriber subs { };
     std::string topic("sample-topic");
     eb.subscribe(topic, &subs);

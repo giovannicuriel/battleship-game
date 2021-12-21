@@ -5,7 +5,6 @@
 
 class Subscriber {
 public:
-
     virtual void processEvent(Event* event) = 0;
 };
 
