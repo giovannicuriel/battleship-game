@@ -29,6 +29,7 @@ AS_IF([test x$enable_unit_tests == xyes],
     [PKG_CHECK_MODULES([GTEST], [ gtest_main, gmock ])]
 )
 
+
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.

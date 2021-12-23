@@ -1,0 +1,31 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      CXX: g++-11
+    steps:
+    - uses: actions/checkout@v2
+    - name: Installing dependencies
+      run: |
+          sudo apt update
+          sudo apt -y install libgtest-dev libgmock-dev libsdl2-dev lcov g++-11
+    - name: Initial configuration
+      run: ./autogen.sh && ./configure --enable-unit-tests
+    - name: make
+      run: make
+    - name: make coverage
+      run: make coverage
+    - name: Codecov
+      # You may pin to the exact commit or the version.
+      uses: codecov/codecov-action@v2.1.0
+      with:
+        directory: .

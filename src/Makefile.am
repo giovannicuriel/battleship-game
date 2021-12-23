@@ -2,6 +2,10 @@ AM_CXXFLAGS= $(SDL_CFLAGS)
 bin_PROGRAMS = battleship
 noinst_LIBRARIES = libbattleship.a
 
+if UNIT_TESTS_ENABLED
+    AM_CXXFLAGS += -fprofile-arcs -ftest-coverage -coverage
+endif
+
 libbattleship_a_SOURCES = \
     commons.cpp \
     logic/game-logic.cpp \
@@ -16,4 +20,4 @@ libbattleship_a_SOURCES = \
 battleship_SOURCES= \
     main.cpp
 
-battleship_LDADD = $(SDL_LIBS) libbattleship.a
+battleship_LDADD = $(SDL_LIBS) libbattleship.a -lpthread

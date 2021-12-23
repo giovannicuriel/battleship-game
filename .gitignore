@@ -100,3 +100,7 @@ src/battleship
 tests/battleship-tests
 .vscode
 config.h
+*.gcno
+*.gcda
+coverage-results/
+*.info

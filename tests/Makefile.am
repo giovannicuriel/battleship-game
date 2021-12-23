@@ -1,7 +1,8 @@
-
+AM_CXXFLAGS=
 if UNIT_TESTS_ENABLED
-check_PROGRAMS = battleship-tests
-TESTS = battleship-tests
+    AM_CXXFLAGS += -fprofile-arcs -ftest-coverage -coverage
+    check_PROGRAMS = battleship-tests
+    TESTS = battleship-tests
 endif
 
 battleship_tests_SOURCES = \
