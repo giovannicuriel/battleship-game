@@ -11,5 +11,5 @@ TEST(SubscriptionHandlerFactoryTest, SuccessfullyBuildAHandler) {
     SubscriptionHandlerFactoryImpl factory;
     auto result = factory.build();
 
-    EXPECT_EQ(result, nullptr);
+    EXPECT_NE(result, nullptr);
 }
