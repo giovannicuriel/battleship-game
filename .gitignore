@@ -104,3 +104,4 @@ config.h
 *.gcda
 coverage-results/
 *.info
+*.run
