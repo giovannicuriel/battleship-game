@@ -20,11 +20,14 @@ PKG_CHECK_MODULES([SDL], [
     sdl2
 ])
 
-# TODO make it conditional
-PKG_CHECK_MODULES([GTEST], [
-    gtest_main,
-    gmock
-])
+CXXFLAGS="$CXXFLAGS --std=c++20"
+
+# Building also tests
+AC_ARG_ENABLE([unit_tests], AS_HELP_STRING([--enable-unit-tests], [Build unit tests too]))
+AM_CONDITIONAL([UNIT_TESTS_ENABLED], [test x$enable_unit_tests == xyes])
+AS_IF([test x$enable_unit_tests == xyes],
+    [PKG_CHECK_MODULES([GTEST], [ gtest_main, gmock ])]
+)
 
 # Checks for header files.
 

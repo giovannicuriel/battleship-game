@@ -3,28 +3,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include "mocks/subscription-handler-factory.hpp"
+#include "mocks/subscription-handler.hpp"
+#include "mocks/subscriber.hpp"
+
 using ::testing::Return;
 using ::testing::_;
-
-class MockSubscriptionHandlerFactory: public SubscriptionHandlerFactory {
-public:
-    MOCK_METHOD(SubscriptionHandler*, build, (), (override));
-    ~MockSubscriptionHandlerFactory() { }
-};
-
-class MockSubscriptionHandler: public SubscriptionHandler {
-public:
-    MOCK_METHOD(void, enqueueEvent, (Event *event), (override));
-    MOCK_METHOD(Event *, dequeueEvent, (), (override));
-    MOCK_METHOD(void, addSubscriber, (Subscriber * subscriber), (override));
-    ~MockSubscriptionHandler() { }
-};
-
-class MockSubscriber: public Subscriber {
-public:
-    MOCK_METHOD(void, processEvent, (Event *), (override));
-    ~MockSubscriber() { }
-};
 
 
 TEST(EventBrokerTest, SuccessfullyCreatesSubscriptions) {

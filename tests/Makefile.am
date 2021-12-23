@@ -1,5 +1,8 @@
-AM_CXXFLAGS= $(SDL_CFLAGS)
-bin_PROGRAMS = battleship-tests
+
+if UNIT_TESTS_ENABLED
+check_PROGRAMS = battleship-tests
+TESTS = battleship-tests
+endif
 
 battleship_tests_SOURCES = \
     event-broker/event-broker-tests.cpp
