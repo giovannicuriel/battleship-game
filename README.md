@@ -21,3 +21,11 @@ Just configure this application with `--enable-unit-tests`:
 ./configure --enable-unit-tests
 make check
 ```
+
+You can also generate a nice webpage showing the test coverage results:
+
+```bash
+make converage_diff
+```
+
+All files will be shown, even if they were not executed.
