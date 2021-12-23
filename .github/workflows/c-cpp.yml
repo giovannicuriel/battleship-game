@@ -23,12 +23,10 @@ jobs:
     - name: make
       run: make
     - name: make coverage
-      run: |
-        make coverage
-        if [ '$?' -ne '0' ]; then
-          echo "Failure when executing tests:"
-          cat tests/test-suite.log
-        fi
+      run: make coverage
+    - name: print errors
+      if: failure()
+      run: cat tests/test-suite.log
     - name: Codecov
       # You may pin to the exact commit or the version.
       uses: codecov/codecov-action@v2.1.0
