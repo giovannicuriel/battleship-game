@@ -1,11 +1,18 @@
 AM_CXXFLAGS=
 if UNIT_TESTS_ENABLED
     AM_CXXFLAGS += -fprofile-arcs -ftest-coverage -coverage
-    check_PROGRAMS = battleship-tests
-    TESTS = battleship-tests
+    check_PROGRAMS = \
+        event-broker-tests.run \
+        subscription-handler-factory-tests.run
+    TESTS = \
+        event-broker-tests.run \
+        subscription-handler-factory-tests.run
 endif
 
-battleship_tests_SOURCES = \
-    event-broker/event-broker-tests.cpp
+event_broker_tests_run_SOURCES = event-broker/event-broker-tests.cpp
+subscription_handler_factory_tests_run_SOURCES = event-broker/subscription-handler-factory-tests.cpp
 
-battleship_tests_LDADD = $(SDL_LIBS) $(GTEST_LIBS) ../src/libbattleship.a
+default_deps = $(SDL_LIBS) $(GTEST_LIBS) ../src/libbattleship.a
+
+event_broker_tests_run_LDADD = $(default_deps)
+subscription_handler_factory_tests_run_LDADD = $(default_deps)
