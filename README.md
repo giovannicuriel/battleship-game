@@ -2,6 +2,8 @@
 
 This is (will be) a simple game. Educational purpose only ;D
 
+[![codecov](https://codecov.io/gh/giovannicuriel/battleship-game/branch/main/graph/badge.svg?token=3UT1LPVXYJ)](https://codecov.io/gh/giovannicuriel/battleship-game)
+
 ## How to build
 
 Dependencies:
