@@ -25,7 +25,7 @@ jobs:
     - name: make coverage
       run: |
         make coverage
-        if [ '$?' -ne '0' ];
+        if [ '$?' -ne '0' ]; then
           echo "Failure when executing tests:"
           cat tests/test-suite.log
         fi
