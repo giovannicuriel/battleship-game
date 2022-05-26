@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <SDL.h>
-#include "commons.hpp"
-#include "world/world.hpp"
+#include <gui/world/types.hpp>
+#include <gui/world/world.hpp>
 
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 400

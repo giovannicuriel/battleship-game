@@ -1,8 +1,10 @@
 #ifndef __BOARD_TILE_HPP__
 #define __BOARD_TILE_HPP__
 
-#include "commons.hpp"
-#include "world/world-object.hpp"
+#include "gui/world/types.hpp"
+#include "gui/world/world-object.hpp"
+
+using namespace gui;
 
 class GameLogic;
 

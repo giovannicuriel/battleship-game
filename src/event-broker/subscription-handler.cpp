@@ -1,27 +1,22 @@
 #include <iostream>
+#include <unistd.h>
 #include "subscription-handler.hpp"
 
 void SubscriptionHandlerImpl::eventLoop(SubscriptionHandlerImpl* handler) {
+    handler->isRunning = true;
     while (handler->isRunning) {
-        handler->semaphore.acquire();
         Event* event = handler->dequeueEvent();
-        if (event == nullptr) { continue; }
+        if (event == nullptr) { 
+            continue; 
+        }
         for (auto& s: handler->subscribers) {
             s->processEvent(event);
         }
     }
 }
 
-SubscriptionHandlerImpl::SubscriptionHandlerImpl():
-    subscribers(),
-    queue(),
-    mutex(),
-    semaphore(0),
-    isRunning(true) {
-    thread = std::thread(SubscriptionHandlerImpl::eventLoop, this);
-}
-
-SubscriptionHandlerImpl::~SubscriptionHandlerImpl() {
+void SubscriptionHandlerImpl::stop() {
+    if (isRunning == false) { return; }
     isRunning = false;
     semaphore.release();
     std::cout << "Stopping thread.\n";
@@ -29,17 +24,37 @@ SubscriptionHandlerImpl::~SubscriptionHandlerImpl() {
     std::cout << "Thread stopped.\n";
 }
 
+SubscriptionHandlerImpl::SubscriptionHandlerImpl():
+    subscribers(),
+    queue(),
+    mutex(),
+    semaphore(0) {
+    isRunning = false;
+    thread = std::thread(SubscriptionHandlerImpl::eventLoop, this);
+    while (!isRunning) {
+        usleep(100);
+    }
+}
+
+SubscriptionHandlerImpl::~SubscriptionHandlerImpl() {
+    stop();
+}
+
 void SubscriptionHandlerImpl::enqueueEvent(Event* event) {
     mutex.lock();
     queue.push(event);
-    semaphore.release();
     mutex.unlock();
+    semaphore.release();
 }
 
 Event* SubscriptionHandlerImpl::dequeueEvent() {
+    semaphore.acquire();
     mutex.lock();
-    Event* event = queue.front();
-    queue.pop();
+    Event* event = nullptr;
+    if (queue.size() != 0) {
+        event = queue.front();
+        queue.pop();
+    }
     mutex.unlock();
     return event;
 }

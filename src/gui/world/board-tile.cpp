@@ -1,6 +1,6 @@
 #include <iostream>
 #include "logic/game-logic.hpp"
-#include "world/board-tile.hpp"
+#include "gui/world/board-tile.hpp"
 
 #define COLOR_INCREMENT 25
 

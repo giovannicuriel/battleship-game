@@ -31,6 +31,7 @@ protected:
 public:
     SubscriptionHandlerImpl();
     virtual ~SubscriptionHandlerImpl();
+    void stop();
     void enqueueEvent(Event *event);
     Event * dequeueEvent();
     void addSubscriber(Subscriber * subscriber);

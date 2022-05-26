@@ -1,4 +1,4 @@
-#include "world-object.hpp"
+#include "gui/world/world-object.hpp"
 
 WorldObject::WorldObject(SDL_Renderer* renderer) {
     this->renderer = renderer;

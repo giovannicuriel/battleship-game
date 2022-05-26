@@ -2,7 +2,7 @@
 #define __GAME_LOGIC_HPP__
 
 #include <list>
-#include "world/board-tile.hpp"
+#include "gui/world/board-tile.hpp"
 
 class GameLogic
 {

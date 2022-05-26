@@ -14,6 +14,8 @@ class EventBroker {
 protected:
     std::map<Topic, SubscriptionHandler*> m_SubscriptionHandlers;
     SubscriptionHandlerFactory* m_SubscriptionHandlerFactory;
+
+    SubscriptionHandler* getOrCreateHandler(Topic topic);
 public:
     EventBroker(
         SubscriptionHandlerFactory * factory
