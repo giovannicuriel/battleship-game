@@ -10,6 +10,7 @@
 #include "event-broker/subscriber.hpp"
 #include "event-broker/subscription-handler-factory.hpp"
 #include <unistd.h>
+#include <logic/minefield/minefield.hpp>
 
 // class SimpleSubscriber: public Subscriber {
 // public:
@@ -181,11 +182,14 @@
 //     return 0;
 // }
 
+#include <cli/command-builder.hpp>
 #include <cli/cli.hpp>
 
 int main_minefield_cli(void) {
     Field minefield;
-    Cli cli { minefield };
+    PatriciaTree<Node<CliCommand*, StringKeySpec>> commandTree;
+    CliCommandBuilder builder { &commandTree, &minefield };
+    Cli cli { &commandTree, &minefield, &builder};
     cli.run();
     return 0;
 }

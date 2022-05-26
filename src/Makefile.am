@@ -18,7 +18,9 @@ libbattleship_a_SOURCES = \
     event-broker/event-broker.cpp \
     event-broker/subscription-handler-factory.cpp \
     event-broker/subscription-handler.cpp \
-    cli/cli.cpp
+    cli/cli.cpp \
+    cli/command-builder.cpp \
+    cli/command-palette.cpp
 
 battleship_SOURCES= \
     main.cpp

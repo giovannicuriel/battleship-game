@@ -3,10 +3,10 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "mocks/subscription-handler-factory.hpp"
-#include "mocks/subscription-handler.hpp"
-#include "mocks/subscriber.hpp"
-#include "mocks/event.hpp"
+#include "../mocks/subscription-handler-factory.hpp"
+#include "../mocks/subscription-handler.hpp"
+#include "../mocks/subscriber.hpp"
+#include "../mocks/event.hpp"
 
 using ::testing::Return;
 using ::testing::_;
