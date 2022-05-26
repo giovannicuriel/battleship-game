@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
-#include "world/world.hpp"
-#include "world/board-tile.hpp"
+#include "gui/world/world.hpp"
+#include "gui/world/board-tile.hpp"
 #include "gui/window.hpp"
 #include "gui/events.hpp"
 #include "logic/game-logic.hpp"
@@ -11,34 +11,35 @@
 #include "event-broker/subscription-handler-factory.hpp"
 #include <unistd.h>
 
-class SimpleSubscriber: public Subscriber {
-public:
-    void processEvent(Event* e) {
-        MouseClickedEvent* event = (MouseClickedEvent*)e;
-        std::cout << "Processing event: " << event->x << ", " << event->y << "\n";
-        sleep(1);
-    }
-};
+// class SimpleSubscriber: public Subscriber {
+// public:
+//     void processEvent(Event* e) {
+//         MouseClickedEvent* event = (MouseClickedEvent*)e;
+//         std::cout << "Processing event: " << event->x << ", " << event->y << "\n";
+//         sleep(1);
+//     }
+// };
 
-int main(void) {
+// int main_subscriber(void) {
 
-    EventBroker eb { new SubscriptionHandlerFactoryImpl() };
-    SimpleSubscriber subs { };
-    std::string topic("sample-topic");
-    eb.subscribe(topic, &subs);
-    std::cout << "[main] waiting to send some events\n";
-    sleep(2);
-    std::cout << "[main] sending some events\n";
+//     EventBroker eb { new SubscriptionHandlerFactoryImpl() };
+//     SimpleSubscriber subs { };
+//     std::string topic("sample-topic");
+//     eb.subscribe(topic, &subs);
+//     std::cout << "[main] waiting to send some events\n";
+//     sleep(2);
+//     std::cout << "[main] sending some events\n";
 
-    MouseClickedEvent ev1 { x: 10, y: 20 };
-    MouseClickedEvent ev2 { x: 10, y: 30 };
-    eb.publish(topic, &ev1);
-    eb.publish(topic, &ev2);
-    sleep(5);
-}
+//     MouseClickedEvent ev1 { x: 10, y: 20 };
+//     MouseClickedEvent ev2 { x: 10, y: 30 };
+//     eb.publish(topic, &ev1);
+//     eb.publish(topic, &ev2);
+//     sleep(5);
+//     return 0;
+// }
 
 
-// int main(void)
+// int main_gui(void)
 // {
 //     World world;
 //     GameLogic logic;
@@ -84,21 +85,10 @@ int main(void) {
 //         SDL_Delay(1000 / 10);
 //     }
 //     return 0;
-// }
+// };
 
 
 // #include <list>
-
-// struct Point
-// {
-//     int x;
-//     int y;
-// };
-
-// std::ostream & operator<<(std::ostream & out, const Point & p) {
-//     out << "(" << p.x << ", " << p.y << ")";
-//     return out;
-// }
 
 // struct ConvexPolygon {
 //     std::list<Point> points;
@@ -125,56 +115,56 @@ int main(void) {
 // };
 
 
-// // struct Predicate {
-// //     virtual bool operator()() = 0;
-// // };
+// struct Predicate {
+//     virtual bool operator()() = 0;
+// };
 
-// // class MouseClickedInside : public Predicate {
-// // protected:
-// //     int x;
-// //     int y;
-// // public:
-// //     MouseClickedInside(int x, int y) : x(x), y(y) {}
-// //     bool operator()() {
-// //         std::cout << "Mouse event at " << x << " " << y << "\n";
-// //         return true;
-// //     }
-// // };
-
-
-// // class EventData;
+// class MouseClickedInside : public Predicate {
+// protected:
+//     int x;
+//     int y;
+// public:
+//     MouseClickedInside(int x, int y) : x(x), y(y) {}
+//     bool operator()() {
+//         std::cout << "Mouse event at " << x << " " << y << "\n";
+//         return true;
+//     }
+// };
 
 
-// // class Subscriber {
-// // public:
-// //     Subscriber();
-// //     virtual ~Subscriber();
-// //     virtual void onEvent(EventData *data) = 0;
-// // };
+// class EventData;
 
-// // struct Subscription {
-// //     Subscriber * m_Subscriber;
-// //     Subscription * when(Predicate * predicate);
-// // }
 
-// // class Databroker
-// // {
-// // protected:
-// //     std::list<Subscriber> m_Subscribers;
+// class Subscriber {
+// public:
+//     Subscriber();
+//     virtual ~Subscriber();
+//     virtual void onEvent(EventData *data) = 0;
+// };
 
-// // public:
-// //     Databroker();
-// //     virtual ~Databroker();
-// //     void addSubscriber(Subscriber *subscriber, Delegate *delegate, std::string topic);
-// //     void sendEvent(std::string topic, EventData * data);
-// // };
+// struct Subscription {
+//     Subscriber * m_Subscriber;
+//     Subscription * when(Predicate * predicate);
+// }
+
+// class Databroker
+// {
+// protected:
+//     std::list<Subscriber> m_Subscribers;
+
+// public:
+//     Databroker();
+//     virtual ~Databroker();
+//     void addSubscriber(Subscriber *subscriber, Delegate *delegate, std::string topic);
+//     void sendEvent(std::string topic, EventData * data);
+// };
 
 
 // void testIsInside(const Point &p, ConvexPolygon &polygon) {
 //     std::cout << "Point " << p << " is inside: " << polygon.contains(p) << "\n";
 // }
 
-// int main(void)
+// int main_is_inside(void)
 // {
 //     std::cout << "Hello, World!" << std::endl;
 //     ConvexPolygon polygon;
@@ -190,3 +180,15 @@ int main(void) {
 //     testIsInside({x : 1, y : 1}, polygon);
 //     return 0;
 // }
+
+#include <cli/cli.hpp>
+
+int main_minefield_cli(void) {
+    Field minefield;
+    Cli cli { minefield };
+    cli.run();
+    return 0;
+}
+int main(void) {
+    return main_minefield_cli();
+}
