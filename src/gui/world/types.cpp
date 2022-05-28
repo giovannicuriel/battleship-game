@@ -1,6 +1,7 @@
 #include <iostream>
+#include "gui/world/types.hpp"
 using namespace std;
-#include "commons.hpp"
+using namespace gui;
 
 Color &Color::operator+=(std::vector<u_int8_t> v)
 {
@@ -34,4 +35,8 @@ bool Area::contains(Point p)
            this->rect.y <= p.y &&
            (this->rect.x + this->rect.w) >= p.x &&
            (this->rect.y + this->rect.h) >= p.y;
+}
+ostream& operator<<(ostream& out, const gui::Point &p) {
+    out << "(" << p.x << "," << p.y << ")";
+    return out;
 }

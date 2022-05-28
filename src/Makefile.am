@@ -7,15 +7,21 @@ if UNIT_TESTS_ENABLED
 endif
 
 libbattleship_a_SOURCES = \
-    commons.cpp \
+    gui/world/types.cpp \
     logic/game-logic.cpp \
+    logic/minefield/minefield.cpp \
+    logic/types.cpp \
     gui/window.cpp \
-    world/world-object.cpp \
-    world/board-tile.cpp \
-    world/world.cpp \
+    gui/world/world-object.cpp \
+    gui/world/board-tile.cpp \
+    gui/world/world.cpp \
     event-broker/event-broker.cpp \
     event-broker/subscription-handler-factory.cpp \
-    event-broker/subscription-handler.cpp
+    event-broker/subscription-handler.cpp \
+    cli/cli.cpp \
+    cli/command-builder.cpp \
+    cli/command-palette.cpp \
+    cli/input-reader.cpp
 
 battleship_SOURCES= \
     main.cpp

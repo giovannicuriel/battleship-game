@@ -4,8 +4,10 @@
 #include <vector>
 #include <memory>
 
-#include "world-object.hpp"
+#include "gui/world/world-object.hpp"
 #include "gui/events.hpp"
+
+using namespace gui;
 
 class World {
 protected:

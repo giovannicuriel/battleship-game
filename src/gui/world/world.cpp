@@ -1,4 +1,4 @@
-#include "world/world.hpp"
+#include "gui/world/world.hpp"
 
 World::World()
 {

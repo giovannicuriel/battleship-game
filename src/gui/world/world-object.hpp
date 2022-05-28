@@ -3,7 +3,9 @@
 
 #include <SDL.h>
 #include "gui/events.hpp"
-#include "commons.hpp"
+#include "gui/world/types.hpp"
+
+using namespace gui;
 
 class WorldObject {
 protected:
