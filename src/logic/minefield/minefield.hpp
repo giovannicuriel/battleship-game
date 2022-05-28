@@ -17,9 +17,10 @@ protected:
 public:
     Field();
 
-    void generate(::Dimension d, size_t nBombs);
-    std::map<::Point, BombCount> probe(const ::Point p) const;
-    std::map<::Point, BombCount> sweep() const;
+    virtual void generate(::Dimension d, size_t nBombs);
+    virtual std::map<::Point, BombCount> probe(const ::Point p) const;
+    virtual std::map<::Point, BombCount> sweep() const;
+    virtual std::string toString() const;
 
     friend std::ostream& operator<<(std::ostream& out, const Field& obj);
 };

@@ -5,7 +5,7 @@ PrintHelpCommand::PrintHelpCommand(
     ): m_Tree(tree) {
 
 }
-void PrintHelpCommand::operator()() {
+void PrintHelpCommand::execute() {
     std::cout << "This is the help menu\n";
     std::cout << *m_Tree;
 }
@@ -13,7 +13,7 @@ void PrintHelpCommand::operator()() {
 CreateMinefieldCommand::CreateMinefieldCommand(Field* field):
     m_Field(field) { }
 
-void CreateMinefieldCommand::operator()() {
+void CreateMinefieldCommand::execute() {
     std::cout << "Generating minefield...\n";
     m_Field->generate(Dimension { 10, 10}, 4);
     std::cout << "ok.\n";
@@ -22,34 +22,34 @@ void CreateMinefieldCommand::operator()() {
 PrintMinefieldCommand::PrintMinefieldCommand(Field* field):
     m_Field(field) { }
 
-void PrintMinefieldCommand::operator()() {
+void PrintMinefieldCommand::execute() {
     std::cout << "Minefield is: \n";
-    std::cout << *m_Field;
+    std::cout << m_Field->toString();
     std::cout << "ok.\n";
 }
 
-ProbeMinefieldCommand::ProbeMinefieldCommand(Field* field):
-    m_Field(field) { }
+ProbeMinefieldCommand::ProbeMinefieldCommand(Field* field, InputReader* reader):
+    m_Field(field), m_Reader(reader) { }
 
-void ProbeMinefieldCommand::operator()() {
+void ProbeMinefieldCommand::execute() {
     ::Point p;
     std::cout << "Probing minefield: \n";
     std::cout << "X: ";
-    std::cin >> p.x;
+    m_Reader->readValue(p.x);
     std::cout << "Y: ";
-    std::cin >> p.y;
+    m_Reader->readValue(p.y);
     auto result = m_Field->probe(p);
     std::cout << "Result: \n";
     std::cout << result;
     std::cout << "Minefield is: \n";
-    std::cout << *m_Field;
+    std::cout << m_Field->toString();
     std::cout << "ok.\n";
 }
 
 SweepMinefieldCommand::SweepMinefieldCommand(Field* field):
     m_Field(field) { }
 
-void SweepMinefieldCommand::operator()() {
+void SweepMinefieldCommand::execute() {
     auto result = m_Field->sweep();
     for (int16_t x = 0; x < 10; x++) {
         for (int16_t y = 0; y < 10; y++) {

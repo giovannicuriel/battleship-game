@@ -20,7 +20,8 @@ libbattleship_a_SOURCES = \
     event-broker/subscription-handler.cpp \
     cli/cli.cpp \
     cli/command-builder.cpp \
-    cli/command-palette.cpp
+    cli/command-palette.cpp \
+    cli/input-reader.cpp
 
 battleship_SOURCES= \
     main.cpp

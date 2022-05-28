@@ -2,8 +2,9 @@
 
 CliCommandBuilder::CliCommandBuilder(
     PatriciaTree<Node<CliCommand*, StringKeySpec>>* tree,
-    Field* field
-): m_Tree(tree), m_Field(field) {
+    Field* field,
+    InputReader* reader
+): m_Tree(tree), m_Field(field), m_Reader(reader) {
 
 }
 
@@ -16,7 +17,7 @@ CliCommandNode CliCommandBuilder::buildCommand(CommandKey key) {
         case PRINT_MINEFIELD:
             return CliCommandNode { "minefield print", new PrintMinefieldCommand(m_Field) };
         case PROBE_MINEFIELD:
-            return CliCommandNode { "probe", new ProbeMinefieldCommand(m_Field) };
+            return CliCommandNode { "probe", new ProbeMinefieldCommand(m_Field, m_Reader) };
         case SWEEP_MINEFIELD:
             return CliCommandNode { "sweep", new SweepMinefieldCommand(m_Field) };
         default:

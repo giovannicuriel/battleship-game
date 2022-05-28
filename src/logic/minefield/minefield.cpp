@@ -1,3 +1,4 @@
+#include <sstream>
 #include "minefield.hpp"
 
 Field::Field() {
@@ -81,11 +82,17 @@ std::map<Point, int16_t> Field::sweep() const {
     return result;
 }
 
-std::ostream& operator<<(std::ostream& out, const Field& obj) {
-    out << "Dimensions: " << obj.m_Dimension << "\n";
-    out << "Bombs are: \n";
-    for (auto b: obj.m_Bombs) {
-        out << "   " << b << "\n";
+std::string Field::toString() const {
+    std::stringstream ss;
+    ss << "Dimensions: " << m_Dimension << "\n";
+    ss << "Bombs are: \n";
+    for (auto b: m_Bombs) {
+        ss << "   " << b << "\n";
     }
+    return ss.str();
+}
+
+std::ostream& operator<<(std::ostream& out, const Field& obj) {
+    out << obj;
     return out;
 }

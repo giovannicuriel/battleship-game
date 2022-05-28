@@ -184,13 +184,25 @@
 
 #include <cli/command-builder.hpp>
 #include <cli/cli.hpp>
+#include <cli/input-reader.hpp>
+#include <fstream>
 
 int main_minefield_cli(void) {
     Field minefield;
     PatriciaTree<Node<CliCommand*, StringKeySpec>> commandTree;
-    CliCommandBuilder builder { &commandTree, &minefield };
-    Cli cli { &commandTree, &minefield, &builder};
+    InputReader reader(&std::cin);
+    CliCommandBuilder builder { &commandTree, &minefield, &reader };
+    Cli cli { &commandTree, &minefield, &builder, &reader };
     cli.run();
+    return 0;
+}
+
+int main_input_reader(void) {
+    std::ifstream ifs;
+    ifs.open("./tests/cli/should-build-a-reader-test.txt", std::ifstream::in);
+    InputReader reader(&ifs);
+    std::string result = reader.readline();
+    std::cout << result << "\n";
     return 0;
 }
 int main(void) {

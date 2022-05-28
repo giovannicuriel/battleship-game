@@ -3,6 +3,7 @@
 
 #include <cli/patricia-tree.hpp>
 #include <cli/command-palette.hpp>
+#include <cli/input-reader.hpp>
 
 enum CommandKey {
     PRINT_HELP_COMMAND,
@@ -21,12 +22,14 @@ class CliCommandBuilder {
 protected:
     PatriciaTree<Node<CliCommand*, StringKeySpec>>* m_Tree;
     Field* m_Field;
+    InputReader* m_Reader;
 public:
     CliCommandBuilder(
         PatriciaTree<Node<CliCommand*, StringKeySpec>>* tree,
-        Field* m_Field
+        Field* m_Field,
+        InputReader* m_Reader
     );
-    CliCommandNode buildCommand(CommandKey key);
+    virtual CliCommandNode buildCommand(CommandKey key);
 };
 
 

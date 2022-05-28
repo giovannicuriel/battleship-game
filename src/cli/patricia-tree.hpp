@@ -2,6 +2,7 @@
 #define __CLI_PATRICIA_TREE_HPP__
 
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <map>
 #include <unistd.h>
@@ -177,6 +178,7 @@ public:
     Node* findNode(Key key, bool relaxed) const;
     void insertNode(Key key, DataType data);
 
+    virtual std::string toString() const;
     template<typename N, typename A, typename K>
     friend std::ostream& operator<<(std::ostream& out, const PatriciaTree<N, A, K>& obj);
 };
@@ -213,8 +215,6 @@ Node* PatriciaTree<Node, Data, Key>::findNode(
         return (result != nullptr ? result : currNode);
     } else if (longestIndex > 0) {
         return (relaxed ? currNode : nullptr);
-    } else {
-        return nullptr;
     }
 }
 
@@ -229,6 +229,13 @@ Node* PatriciaTree<Node, Data, Key>::findNode(
     }
     return findNode(child, key, relaxed);
 }
+
+template<typename Node, typename Data, typename Key>
+std::string PatriciaTree<Node, Data, Key>::toString() const {
+    std::stringstream ss;
+    ss << m_Root;
+    return ss.str();
+};
 
 template<typename Node, typename Data, typename Key>
 void PatriciaTree<Node, Data, Key>::insertNode(
@@ -264,7 +271,7 @@ void PatriciaTree<Node, Data, Key>::insertNode(
 
 template<typename Node, typename Data, typename Key>
 std::ostream& operator<<(std::ostream& out, const PatriciaTree<Node, Data, Key>& obj) {
-    out << obj.m_Root;
+    out << obj.toString();
     return out;
 }
 
