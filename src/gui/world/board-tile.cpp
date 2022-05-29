@@ -1,75 +1,58 @@
-#include <iostream>
-#include "logic/game-logic.hpp"
-#include "gui/world/board-tile.hpp"
+#include <gui/world/board-tile.hpp>
 
 #define COLOR_INCREMENT 25
 
-BoardTile::BoardTile(SDL_Renderer *renderer, GameLogic * logic, BoardTileConfig config) : WorldObject(renderer)
+BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) : WorldObject(renderer)
 {
-    this->area.rect = {
+    this->m_Area.rect = {
         x : config.origin.x,
         y : config.origin.y,
         w : config.size.x,
         h : config.size.y
     };
-    this->color.argb = {
+    this->m_Color.argb = {
         r : 0,
         g : 0,
         b : 255,
         a : 255
     };
-    this->state = DESELECTED;
-    this->hasShip = config.hasShip;
-    this->logic = logic;
+    this->m_State = DESELECTED;
 }
 
-BoardTile::~BoardTile()
-{
+BoardTile::~BoardTile() {
 }
 
-bool BoardTile::contains(Point point) {
-    return this->area.contains(point);
+bool BoardTile::contains(Gui::Point point) {
+    return this->m_Area.contains(point);
 }
 
-void BoardTile::processEvent(GUIEvent event)
-{
-    if ((event.type == MOUSE_CLICKED) && (this->area.contains(event.point)))
-    {
-        if (this->hasShip)
-        {
-            this->state = BLOWN_UP;
-            logic->blowUpTile(this);
-        }
-        else
-        {
-            this->state = !this->state;
-        }
-    }
+void BoardTile::setState(BoardTileState state) {
+    this->m_State = state;
 }
 
 void BoardTile::draw()
 {
-    switch (this->state)
+    switch (this->m_State)
     {
     case SELECTED:
-        this->color.copyFrom({0, 255, 0, 255});
+        this->m_Color.copyFrom({0, 255, 0, 255});
         break;
     case DESELECTED:
-        this->color.copyFrom({0, 0, 255, 255});
+        this->m_Color.copyFrom({0, 0, 255, 255});
         break;
     case BLOWN_UP:
-        this->color.copyFrom({255, 0, 0, 255});
+        this->m_Color.copyFrom({255, 0, 0, 255});
         break;
     default:
         break;
     }
 
-    SDL_SetRenderDrawColor(this->renderer,
-                           this->color.argb.r,
-                           this->color.argb.g,
-                           this->color.argb.b,
-                           this->color.argb.a);
-    SDL_RenderFillRect(this->renderer, &this->area.rect);
+    SDL_SetRenderDrawColor(this->m_Renderer,
+                           this->m_Color.argb.r,
+                           this->m_Color.argb.g,
+                           this->m_Color.argb.b,
+                           this->m_Color.argb.a);
+    SDL_RenderFillRect(this->m_Renderer, &this->m_Area.rect);
 }
 
 BoardTileState operator!(BoardTileState state)
@@ -88,6 +71,3 @@ BoardTileState operator!(BoardTileState state)
         return BoardTileState::IDLE;
     }
 }
-
-
-bool BoardTile::hidesShip() { return this->hasShip; };

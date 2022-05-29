@@ -1,0 +1,45 @@
+@startuml Game
+
+actor User
+
+User -> Gui: clicks at X, Y
+Gui -> EventBroker: send event MouseClicked(X, Y)
+
+BoardController -> EventBroker: listen event MouseClicked
+EventBroker --> BoardController: MouseClicked(X, Y)
+BoardController -> BoardController: getTileAt(X, Y)
+BoardController --> BoardController: BoardTile(id=9)
+alt if board.state = NORMAL
+BoardController -> EventBroker: send event BoardClicked(9)
+BoardController -> BoardTile: setState(CLICKED)
+end
+
+MinefieldController -> EventBroker: listen event BoardClicked
+EventBroker --> MinefieldController: BoardTileClicked(id=9)
+MinefieldController -> Minefield: probe(board.position)
+alt
+Minefield --> MinefieldController: bombTouched!
+MinefieldController -> EventController: send event BombTouched()
+else
+Minefield --> MinefieldController: bomb not touched!
+MinefieldController -> EventController: send event BombNotTouched()
+end
+
+alt Bomb touched
+GameLogic -> EventBroker: listen event BombTouched
+EventBroker --> GameLogic: BombTouched()
+GameLogic -> GameLogic: countRemainingBombs()
+alt remaining bombs = 0
+GameLogic -> EventBroker: send event UserLooses()
+end
+else Bomb not touched 
+GameLogic -> EventBroker: listen event BombNotTouched
+EventBroker --> GameLogic: BombNotTouched()
+GameLogic -> GameLogic: countRemainingTiles()
+alt remaining tiles = 0
+GameLogic -> EventBroker: send event UserWins()
+end
+
+end
+
+@enduml

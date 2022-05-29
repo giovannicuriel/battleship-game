@@ -3,19 +3,16 @@
 
 #include <SDL.h>
 #include "gui/events.hpp"
-#include "gui/world/types.hpp"
-
-using namespace gui;
+#include "gui/types.hpp"
 
 class WorldObject {
 protected:
-    SDL_Renderer* renderer;
+    SDL_Renderer* m_Renderer;
 public:
     WorldObject(SDL_Renderer* renderer);
     virtual ~WorldObject();
-    virtual void processEvent(GUIEvent event) = 0;
     virtual void draw() = 0;
-    virtual bool contains(Point point) = 0;
+    virtual bool contains(Gui::Point point) = 0;
 };
 
 #endif // __WORLD_OBJECT_HPP__

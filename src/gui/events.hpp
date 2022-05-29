@@ -2,18 +2,20 @@
 #define __GUI_EVENTS_HPP__
 
 #include <SDL.h>
+#include <event-broker/events.hpp>
+#include <gui/types.hpp>
 
-enum GUIEventType
+enum GuiEventType
 {
     MOUSE_ENTERED,
     MOUSE_EXITED,
     MOUSE_CLICKED
 };
 
-struct GUIEvent
+struct GuiEvent : public Event
 {
-    GUIEventType type;
-    SDL_Point point;
+    GuiEventType type;
+    Gui::Point point;
 };
 
 #endif // __GUI_EVENTS_HPP__

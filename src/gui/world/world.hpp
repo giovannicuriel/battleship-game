@@ -7,8 +7,6 @@
 #include "gui/world/world-object.hpp"
 #include "gui/events.hpp"
 
-using namespace gui;
-
 class World {
 protected:
     std::vector<WorldObject *> objects;
@@ -16,7 +14,6 @@ public:
     World();
     virtual ~World();
     void addWorldObject(WorldObject * object);
-    void processEvent(GUIEvent event);
     void draw();
 };
 

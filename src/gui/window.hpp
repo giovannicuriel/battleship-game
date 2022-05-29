@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <SDL.h>
-#include <gui/world/types.hpp>
+#include <gui/types.hpp>
 #include <gui/world/world.hpp>
 
 #define SCREEN_WIDTH 400

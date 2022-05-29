@@ -1,17 +1,3 @@
-#include <iostream>
-#include <cstdlib>
-#include "gui/world/world.hpp"
-#include "gui/world/board-tile.hpp"
-#include "gui/window.hpp"
-#include "gui/events.hpp"
-#include "logic/game-logic.hpp"
-
-#include "event-broker/event-broker.hpp"
-#include "event-broker/subscriber.hpp"
-#include "event-broker/subscription-handler-factory.hpp"
-#include <unistd.h>
-#include <logic/minefield/minefield.hpp>
-
 // class SimpleSubscriber: public Subscriber {
 // public:
 //     void processEvent(Event* e) {
@@ -38,100 +24,6 @@
 //     sleep(5);
 //     return 0;
 // }
-
-
-// int main_gui(void)
-// {
-//     World world;
-//     GameLogic logic;
-//     Window window = Window(&world);
-
-//     window.init();
-//     // TODO Improve this thing. Try to use unique_ptr or something else
-//     for (auto x = 0; x < 8; x++)
-//     {
-//         for (auto y = 0; y < 8; y++)
-//         {
-//             BoardTile *tile = new BoardTile(window.renderer, & logic, {
-//                 origin : Point({x : x * 50, y : y * 50}),
-//                 size : Size({x : 50, y : 50}),
-//                 hasShip : rand() % 2 == 0
-//             });
-//             logic.addBoardTile(tile);
-//             world.addWorldObject(tile);
-//         }
-//     }
-
-//     bool shouldExit = false;
-//     SDL_Event event;
-//     while (!shouldExit)
-//     {
-//         while (SDL_PollEvent(&event) != 0)
-//         {
-//             // std::cout << "Received an event: " << event.type << "\n";
-//             switch (event.type)
-//             {
-//             case SDL_QUIT:
-//                 shouldExit = true;
-//                 break;
-//             case SDL_WINDOW_MOUSE_FOCUS:
-//                 world.processEvent({type : MOUSE_ENTERED, point : {x : event.motion.x, y : event.motion.y}});
-//                 break;
-//             case SDL_MOUSEBUTTONDOWN:
-//                 world.processEvent({type : MOUSE_CLICKED, point : {x : event.motion.x, y : event.motion.y}});
-//                 break;
-//             }
-//         }
-//         window.update();
-//         SDL_Delay(1000 / 10);
-//     }
-//     return 0;
-// };
-
-
-// #include <list>
-
-// struct ConvexPolygon {
-//     std::list<Point> points;
-//     bool contains(const Point &p) {
-//         Point current = {x : 0, y : 0};
-//         for (auto it : points) {
-//             if (it.x < p.x) {
-//                 current.x += -1;
-//             } else if (it.x > p.x) {
-//                 current.x += 1;
-//             }
-
-//             if (it.y < p.y) {
-//                 current.y += -1;
-//             } else if (it.y > p.y) {
-//                 current.y += 1;
-//             }
-//         }
-//         if (current.x != 0 && current.y != 0) {
-//             return false;
-//         }
-//         return true;
-//     }
-// };
-
-
-// struct Predicate {
-//     virtual bool operator()() = 0;
-// };
-
-// class MouseClickedInside : public Predicate {
-// protected:
-//     int x;
-//     int y;
-// public:
-//     MouseClickedInside(int x, int y) : x(x), y(y) {}
-//     bool operator()() {
-//         std::cout << "Mouse event at " << x << " " << y << "\n";
-//         return true;
-//     }
-// };
-
 
 // class EventData;
 
@@ -181,30 +73,8 @@
 //     testIsInside({x : 1, y : 1}, polygon);
 //     return 0;
 // }
-
-#include <cli/command-builder.hpp>
-#include <cli/cli.hpp>
-#include <cli/input-reader.hpp>
-#include <fstream>
-
-int main_minefield_cli(void) {
-    Field minefield;
-    PatriciaTree<Node<CliCommand*, StringKeySpec>> commandTree;
-    InputReader reader(&std::cin);
-    CliCommandBuilder builder { &commandTree, &minefield, &reader };
-    Cli cli { &commandTree, &minefield, &builder, &reader };
-    cli.run();
-    return 0;
-}
-
-int main_input_reader(void) {
-    std::ifstream ifs;
-    ifs.open("./tests/cli/should-build-a-reader-test.txt", std::ifstream::in);
-    InputReader reader(&ifs);
-    std::string result = reader.readline();
-    std::cout << result << "\n";
-    return 0;
-}
+#include <controller/window-controller.hpp>
 int main(void) {
-    return main_minefield_cli();
+    WindowController app;    
+    return 0;
 }

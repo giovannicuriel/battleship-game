@@ -1,12 +1,8 @@
 #ifndef __BOARD_TILE_HPP__
 #define __BOARD_TILE_HPP__
 
-#include "gui/world/types.hpp"
+#include "gui/types.hpp"
 #include "gui/world/world-object.hpp"
-
-using namespace gui;
-
-class GameLogic;
 
 enum BoardTileState
 {
@@ -22,29 +18,24 @@ BoardTileState operator!(BoardTileState state);
 
 struct BoardTileConfig
 {
-    Point origin;
-    Size size;
-    bool hasShip;
-    GameLogic * logic;
+    Gui::Point origin;
+    Gui::Size size;
 };
 
 class BoardTile : public WorldObject
 {
 protected:
-    BoardTileState state;
-    Area area;
-    Color color;
-    bool hasShip;
-    GameLogic * logic;
+    BoardTileState m_State;
+    Gui::Area m_Area;
+    Gui::Color m_Color;
 
 public:
-    BoardTile(SDL_Renderer *renderer, GameLogic *logic, BoardTileConfig config);
+    BoardTile(SDL_Renderer *renderer, BoardTileConfig config);
     virtual ~BoardTile();
 
-    void processEvent(GUIEvent event) override;
     void draw() override;
-    bool contains(Point point) override;
-    bool hidesShip();
+    bool contains(Gui::Point point) override;
+    void setState(BoardTileState state);
 };
 
 #endif // __BOARD_TILE_HPP__
