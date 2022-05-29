@@ -4,7 +4,8 @@
 
 BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) :
     WorldObject(renderer),
-    m_Coordinate(config.coordinate)
+    m_Coordinate(config.coordinate),
+    m_Count(0)
 {
     this->m_Area.rect = {
         x : config.origin.x,
@@ -40,7 +41,7 @@ void BoardTile::draw()
         this->m_Color.copyFrom({0, 255, 0, 255});
         break;
     case DESELECTED:
-        this->m_Color.copyFrom({0, 0, 255, 255});
+        this->m_Color.copyFrom({m_Count * 60, 0, 255, 255});
         break;
     case BLOWN_UP:
         this->m_Color.copyFrom({255, 0, 0, 255});
@@ -76,4 +77,8 @@ BoardTileState operator!(BoardTileState state)
 
 ::Point BoardTile::getCoordinate() const {
     return m_Coordinate;
+}
+
+void BoardTile::setSurroundingBombCount(BombCount count) {
+    m_Count = count;
 }

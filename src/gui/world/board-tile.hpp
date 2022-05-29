@@ -31,6 +31,7 @@ protected:
     Gui::Area m_Area;
     Gui::Color m_Color;
     ::Point m_Coordinate;
+    BombCount m_Count;
 public:
     BoardTile(SDL_Renderer *renderer, BoardTileConfig config);
     virtual ~BoardTile();
@@ -38,6 +39,7 @@ public:
     void draw() override;
     bool contains(Gui::Point point) override;
     void setState(BoardTileState state);
+    void setSurroundingBombCount(BombCount count);
     ::Point getCoordinate() const;
 };
 

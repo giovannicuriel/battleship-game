@@ -37,18 +37,30 @@ void BoardTileController::processEvent(Event* event) {
 }
 
 void BoardTileController::processMouseClickedEvent(const Gui::Point& point) {
+    std::map<::Point, BombCount> result;
     for (auto tile: m_Tiles) {
         if (tile->contains(point)) {
             Point tileCoordinate = tile->getCoordinate();
-            std::map<::Point, BombCount> result = m_Field.probe(tileCoordinate);
+            result = m_Field.probe(tileCoordinate);
+            
             if (result[tileCoordinate] == -1) {
-                tile->setState(BLOWN_UP);
                 m_Broker->publish(GAME_EVENTS_TOPIC, new GameEvent { type: BOMB_BLOWN_UP });
             } else {
-                tile->setState(SELECTED);
                 m_Broker->publish(GAME_EVENTS_TOPIC, new GameEvent { type: AREA_CLEARED });
             }
             break;
+        }
+    }
+
+    for (auto tile: m_Tiles) {
+        Point tileCoordinate = tile->getCoordinate();
+        if (result.find(tileCoordinate) != result.end()) {
+            BombCount count = result[tileCoordinate];
+            if (count == -1) {
+                tile->setState(BLOWN_UP);
+            } else {
+                tile->setSurroundingBombCount(count);
+            }
         }
     }
 }
