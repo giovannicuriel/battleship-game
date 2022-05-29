@@ -1,16 +1,19 @@
 #ifndef __GAME_LOGIC_HPP__
 #define __GAME_LOGIC_HPP__
 
-#include <list>
-#include "gui/world/board-tile.hpp"
+#include <logic/types.hpp>
 
 class GameLogic
 {
 protected:
-    bool isGameOver;
+    bool m_IsGameOver;
+    BombCount m_Bombs;
+    BombCount m_MaxBombs;
 public:
-    GameLogic();
-    virtual ~GameLogic();
+    GameLogic(BombCount maxBombs);
+
+    void increaseBlownUpBombCount();
+    bool isGameOver();
 };
 
 #endif // __GAME_LOGIC_HPP__

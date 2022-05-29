@@ -5,17 +5,31 @@
 #include <event-broker/events.hpp>
 #include <gui/types.hpp>
 
-enum GuiEventType
+enum MouseEventType
 {
     MOUSE_ENTERED,
     MOUSE_EXITED,
     MOUSE_CLICKED
 };
 
-struct GuiEvent : public Event
+struct MouseEvent : public Event
 {
-    GuiEventType type;
+    MouseEventType type;
     Gui::Point point;
+};
+
+enum GameEventType {
+    BOMB_BLOWN_UP,
+    AREA_CLEARED,
+    GAME_OVER
+};
+
+struct GameEvent: public Event {
+    GameEventType type;
+};
+
+struct SimpleEvent: public Event {
+    std::string message;
 };
 
 #endif // __GUI_EVENTS_HPP__

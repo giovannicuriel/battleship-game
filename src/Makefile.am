@@ -13,6 +13,8 @@ libbattleship_a_SOURCES = \
     gui/world/board-tile.cpp \
     gui/world/world.cpp \
     controller/window-controller.cpp \
+    controller/board-tile-controller.cpp \
+    controller/game-controller.cpp \
     logic/game-logic.cpp \
     logic/minefield/minefield.cpp \
     logic/types.cpp \

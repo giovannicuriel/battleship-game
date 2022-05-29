@@ -2,7 +2,9 @@
 
 #define COLOR_INCREMENT 25
 
-BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) : WorldObject(renderer)
+BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) :
+    WorldObject(renderer),
+    m_Coordinate(config.coordinate)
 {
     this->m_Area.rect = {
         x : config.origin.x,
@@ -70,4 +72,8 @@ BoardTileState operator!(BoardTileState state)
     default:
         return BoardTileState::IDLE;
     }
+}
+
+::Point BoardTile::getCoordinate() const {
+    return m_Coordinate;
 }

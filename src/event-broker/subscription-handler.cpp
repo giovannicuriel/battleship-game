@@ -12,6 +12,7 @@ void SubscriptionHandlerImpl::eventLoop(SubscriptionHandlerImpl* handler) {
         for (auto& s: handler->subscribers) {
             s->processEvent(event);
         }
+        delete event;
     }
 }
 

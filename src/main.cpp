@@ -74,7 +74,24 @@
 //     return 0;
 // }
 #include <controller/window-controller.hpp>
+#include <controller/board-tile-controller.hpp>
+#include <controller/game-controller.hpp>
+#include <gui/world/world.hpp>
+#include <event-broker/event-broker.hpp>
+#include <event-broker/subscription-handler-factory.hpp>
+#include <event-broker/topics.hpp>
+
 int main(void) {
-    WindowController app;    
+    SubscriptionHandlerFactoryImpl factory;
+    EventBroker broker(&factory);
+    World world;
+    WindowController app(&world, &broker);
+    GameController gameController(&broker);
+    BoardTileController boardController(&world, &app.getWindow(), &broker);
+
+    broker.subscribe(MOUSE_EVENTS_TOPIC, &boardController);
+    broker.subscribe(GAME_EVENTS_TOPIC, &gameController);
+    boardController.start();
+    app.start();
     return 0;
 }
