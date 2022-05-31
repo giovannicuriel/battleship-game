@@ -5,7 +5,6 @@
 #include <gui/events.hpp>
 #include <event-broker/topics.hpp>
 WindowController::WindowController(World* world, EventBroker* broker):
-    m_World(world),
     m_Window(world),
     m_EventBroker(broker) {
     m_Window.init();

@@ -27,14 +27,12 @@ TEST(SubscriptionHandlerTest, ShouldSuccessfullyAddASubscriber) {
 TEST(SubscriptionHandlerTest, ShouldSuccessfullyProcessAnEvent) {
     SubscriptionHandlerImpl handler;
     MockSubscriber mockSubscriber;
-    MockEvent event;
+    MockEvent* event = new MockEvent();
 
     EXPECT_CALL(mockSubscriber, processEvent(_))
         .Times(1);
-
     handler.addSubscriber(&mockSubscriber);
-    std::cout << "queueuing event " << &event << "\n";
-    handler.enqueueEvent(&event);
+    handler.enqueueEvent(event);
     handler.stop();
 }
 

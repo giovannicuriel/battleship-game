@@ -12,16 +12,17 @@
 class Window
 {
 protected:
-    SDL_Window *window;
-    SDL_Surface *screenSurface;
-    World * world;
+    SDL_Window* m_Window;
+    SDL_Surface* m_ScreenSurface;
+    World* m_World;
 public:
     Window(World * world);
     virtual ~Window();
     void init();
     void update();
+    void addObject(WorldObject* worldObj);
 
-    SDL_Renderer *renderer;
+    SDL_Renderer *m_Renderer;
 };
 
 #endif // __WINDOW_HPP__

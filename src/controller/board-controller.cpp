@@ -1,32 +1,29 @@
 #include <iostream>
-#include <controller/board-tile-controller.hpp>
+#include <controller/board-controller.hpp>
 #include <gui/world/board-tile.hpp>
 #include <gui/events.hpp>
 #include <event-broker/topics.hpp>
 
-BoardTileController::BoardTileController(World* world, Window* window, EventBroker* broker):
-    m_World(world),
-    m_Window(window),
+BoardController::BoardController(EventBroker* broker):
     m_Broker(broker) {
-
 }
 
-void BoardTileController::start() {
+void BoardController::addTilesTo(Window* window) {
     m_Field.generate(Dimension { 8, 8}, 14);
     for (short int x = 0; x < 8; x++) {
         for (short int y = 0; y < 8; y++) {
-            BoardTile *tile = new BoardTile(m_Window->renderer, {
+            BoardTile *tile = new BoardTile(window->m_Renderer, {
                 origin : Gui::Point({x : x * 50, y : y * 50}),
                 size : Gui::Size({x : 50, y : 50}),
                 coordinate: Point({x: x, y: y})
             });
             m_Tiles.push_back(tile);
-            m_World->addWorldObject(tile);
+            window->addObject(tile);
         }
     }
 }
 
-void BoardTileController::processEvent(Event* event) {
+void BoardController::processEvent(Event* event) {
     MouseEvent* mouseEvent = (MouseEvent*) event;
     switch (mouseEvent->type) {
         case MOUSE_CLICKED:
@@ -36,7 +33,7 @@ void BoardTileController::processEvent(Event* event) {
     }
 }
 
-void BoardTileController::processMouseClickedEvent(const Gui::Point& point) {
+void BoardController::processMouseClickedEvent(const Gui::Point& point) {
     std::map<::Point, BombCount> result;
     for (auto tile: m_Tiles) {
         if (tile->contains(point)) {
@@ -63,4 +60,8 @@ void BoardTileController::processMouseClickedEvent(const Gui::Point& point) {
             }
         }
     }
+}
+
+void BoardController::start() {
+    m_Broker->subscribe(MOUSE_EVENTS_TOPIC, this);
 }

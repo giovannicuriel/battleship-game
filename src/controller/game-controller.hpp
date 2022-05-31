@@ -13,6 +13,7 @@ protected:
 public:
     GameController(EventBroker* broker);
     void processEvent(Event* event);
+    void start();
 };
 
 #endif // __GAME_CONTROLLER_HPP__

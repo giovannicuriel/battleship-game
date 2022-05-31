@@ -7,7 +7,6 @@
 
 class WindowController {
 protected:
-    World* m_World;
     Window m_Window;
     EventBroker* m_EventBroker;
 public:

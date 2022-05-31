@@ -26,3 +26,6 @@ void GameController::processEvent(Event* event) {
             break;
     }
 }
+void GameController::start() {
+    m_Broker->subscribe(GAME_EVENTS_TOPIC, this);
+}
