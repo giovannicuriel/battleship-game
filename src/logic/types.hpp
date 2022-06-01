@@ -3,6 +3,8 @@
 
 #include <unistd.h>
 #include <map>
+#include <string>
+#include <iostream>
 
 typedef int16_t Coordinate;
 typedef int16_t BombCount;
@@ -10,13 +12,15 @@ typedef int16_t BombCount;
 struct Dimension {
     size_t x;
     size_t y;
+
+    std::string toString() const;
 };
-std::ostream& operator<<(std::ostream& out, const ::Dimension& p);
+
 
 struct Point {
     Coordinate x;
     Coordinate y;
-    bool operator==(const Point& other) { return x == other.x && y == other.y; }
+    friend bool operator==(const Point& lhs, const Point& rhs);
     friend auto operator<=>(const Point&, const Point&) = default;
     Point operator+(const Point& other) {
         return Point {
@@ -24,9 +28,10 @@ struct Point {
             Coordinate(y + other.y)
             };
     }
+    std::string toString() const;
 };
-
-std::ostream& operator<<(std::ostream& out, const ::Point& p);
+bool operator<(const ::Point& lhs, const ::Point& rhs);
+bool operator==(const Point& lhs, const Point& rhs);
 std::ostream& operator<<(std::ostream& out, const std::map<::Point, BombCount>& result);
 
 #endif //__LOGIC_TYPES_HPP__
