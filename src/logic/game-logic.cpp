@@ -1,23 +1,15 @@
 #include <iostream>
-#include "game-logic.hpp"
+#include <logic/game-logic.hpp>
 
-GameLogic::GameLogic() {
+GameLogic::GameLogic(BombCount maxBombs):
+    m_Bombs(0),
+    m_MaxBombs(maxBombs),
+    m_IsGameOver(false) {
 
 }
-
-GameLogic::~GameLogic() {
-
+void GameLogic::increaseBlownUpBombCount() {
+    m_Bombs++;
 }
-
-void GameLogic::addBoardTile(BoardTile * tile) {
-    if (tile->hidesShip()) {
-        this->boardTilesWithShips.push_back(tile);
-    }
-};
-void GameLogic::blowUpTile(BoardTile * tile) {
-    this->boardTilesWithShips.remove(tile);
-    if (this->boardTilesWithShips.size() == 0) {
-        this->isGameOver = true;
-        std::cout << "You win!\n";
-    }
-};
+bool GameLogic::isGameOver() {
+    return m_Bombs == m_MaxBombs;
+}

@@ -216,6 +216,7 @@ Node* PatriciaTree<Node, Data, Key>::findNode(
     } else if (longestIndex > 0) {
         return (relaxed ? currNode : nullptr);
     }
+    return nullptr;
 }
 
 template<typename Node, typename Data, typename Key>

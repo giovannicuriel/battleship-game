@@ -1,23 +1,31 @@
-#include <iostream>
+#include <string>
+#include <sstream>
 #include "types.hpp"
 
-std::ostream& operator<<(std::ostream& out, const ::Dimension& p) {
-    out << "(" << p.x << "-" << p.y << ")";
-    return out;
+
+std::string Dimension::toString() const {
+    std::stringstream ss;
+    ss << "<" << x << ", " << y << ">";
+    return ss.str();
 }
 
-bool operator<(const ::Point lhs, const ::Point rhs) {
+bool operator<(const ::Point& lhs, const ::Point& rhs) {
     return (lhs.x < rhs.x) || ((lhs.x == rhs.x) && (lhs.y < rhs.y));
 }
 
-std::ostream& operator<<(std::ostream& out, const ::Point& p) {
-    out << "[" << p.x << "," << p.y << "]";
-    return out;
+std::string Point::toString() const {
+    std::stringstream out;
+    out << "[" << x << ", " << y << "]";
+    return out.str();
+}
+
+bool operator==(const Point& lhs, const Point& rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y;
 }
 
 std::ostream& operator<<(std::ostream& out, const std::map<::Point, BombCount>& result) {
     for(const auto& [point, value]: result) {
-        out << point << ": " << value << "\n";
+        out << point.toString() << ": " << value << "\n";
     }
     return out;
 }
