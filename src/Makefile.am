@@ -29,4 +29,4 @@ libbattleship_a_SOURCES = \
 battleship_SOURCES= \
     main.cpp
 
-battleship_LDADD = $(SDL_LIBS) libbattleship.a -lpthread
+battleship_LDADD = libbattleship.a -lpthread $(SDL_LIBS)

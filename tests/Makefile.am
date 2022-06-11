@@ -24,7 +24,7 @@ cli_tests_run_SOURCES = cli/cli-tests.cpp
 patricia_tree_tests_run_SOURCES = cli/patricia-tree-tests.cpp
 logic_types_tests_run_SOURCES = logic/types-tests.cpp
 
-default_deps = $(SDL_LIBS) $(GTEST_LIBS) ../src/libbattleship.a
+default_deps = ../src/libbattleship.a $(SDL_LIBS) $(GTEST_LIBS)
 
 event_broker_tests_run_LDADD = $(default_deps)
 subscription_handler_tests_run_LDADD = $(default_deps)
