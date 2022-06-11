@@ -17,7 +17,7 @@ jobs:
     - name: Installing dependencies
       run: |
           sudo apt update
-          sudo apt -y install libgtest-dev libgmock-dev libsdl2-dev lcov g++-11
+          sudo apt -y install libgtest-dev libgmock-dev libsdl2-2.0-0 libsdl2-dev lcov g++-11
     - name: Initial configuration
       run: ./autogen.sh && ./configure --enable-unit-tests
     - name: make
