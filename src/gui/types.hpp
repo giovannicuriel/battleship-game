@@ -6,7 +6,8 @@
 #include <vector>
 #include <iostream>
 
-namespace gui {
+namespace Gui {
+
 typedef SDL_Point Size;
 typedef SDL_Point Point;
 
@@ -30,5 +31,4 @@ struct Color
     void copyFrom(std::vector<u_int8_t> v);
 };
 }
-std::ostream& operator<<(std::ostream& out, const gui::Point &);
 #endif //__DIMENSION_HPP__

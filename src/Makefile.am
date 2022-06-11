@@ -7,14 +7,17 @@ if UNIT_TESTS_ENABLED
 endif
 
 libbattleship_a_SOURCES = \
-    gui/world/types.cpp \
-    logic/game-logic.cpp \
-    logic/minefield/minefield.cpp \
-    logic/types.cpp \
+    gui/types.cpp \
     gui/window.cpp \
     gui/world/world-object.cpp \
     gui/world/board-tile.cpp \
     gui/world/world.cpp \
+    controller/window-controller.cpp \
+    controller/board-controller.cpp \
+    controller/game-controller.cpp \
+    logic/game-logic.cpp \
+    logic/minefield/minefield.cpp \
+    logic/types.cpp \
     event-broker/event-broker.cpp \
     event-broker/subscription-handler-factory.cpp \
     event-broker/subscription-handler.cpp \
@@ -26,4 +29,4 @@ libbattleship_a_SOURCES = \
 battleship_SOURCES= \
     main.cpp
 
-battleship_LDADD = $(SDL_LIBS) libbattleship.a -lpthread
+battleship_LDADD = libbattleship.a -lpthread $(SDL_LIBS)

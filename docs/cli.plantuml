@@ -1,0 +1,43 @@
+@startuml CLI setup
+actor Main
+control Cli
+control CliCommandBuilder
+database PatriciaTree
+
+create Cli
+Main -> Cli: new
+activate Cli
+Cli -> CliCommandBuilder: buildCommand(PRINT_HELP_COMMAND)
+activate CliCommandBuilder
+CliCommandBuilder --> Cli: \n\
+CliCommandNode {\n\
+    "print help",\n\
+    new PrintHelpCommand(m_Tree)\n\
+}
+deactivate CliCommandBuilder
+Cli -> PatriciaTree: insertNode(node.key, node.command)
+Cli --> Main: ok
+deactivate Cli
+@enduml
+
+
+
+@startuml CLI usage
+actor User
+control Cli
+database PatriciaTree
+entity PrintHelpCommand
+
+User -> Cli: types "minefield create"
+activate Cli
+Cli -> PatriciaTree: findNode("minefield create")
+activate PatriciaTree
+PatriciaTree --> Cli: obj: PrintHelpCommand as CliCommand
+deactivate PatriciaTree
+Cli -> PrintHelpCommand: execute()
+activate PrintHelpCommand
+PrintHelpCommand -> PatriciaTree: toString()
+PrintHelpCommand --> Cli: ok
+deactivate PrintHelpCommand
+deactivate Cli
+@enduml

@@ -84,10 +84,10 @@ std::map<Point, int16_t> Field::sweep() const {
 
 std::string Field::toString() const {
     std::stringstream ss;
-    ss << "Dimensions: " << m_Dimension << "\n";
+    ss << "Dimensions: " << m_Dimension.toString() << "\n";
     ss << "Bombs are: \n";
     for (auto b: m_Bombs) {
-        ss << "   " << b << "\n";
+        ss << "   " << b.toString() << "\n";
     }
     return ss.str();
 }

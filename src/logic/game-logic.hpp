@@ -1,20 +1,19 @@
 #ifndef __GAME_LOGIC_HPP__
 #define __GAME_LOGIC_HPP__
 
-#include <list>
-#include "gui/world/board-tile.hpp"
+#include <logic/types.hpp>
 
 class GameLogic
 {
 protected:
-    std::list<BoardTile*> boardTilesWithShips;
-    bool isGameOver;
+    bool m_IsGameOver;
+    BombCount m_Bombs;
+    BombCount m_MaxBombs;
 public:
-    GameLogic();
-    virtual ~GameLogic();
+    GameLogic(BombCount maxBombs);
 
-    void addBoardTile(BoardTile * tile);
-    void blowUpTile(BoardTile * tile);
+    void increaseBlownUpBombCount();
+    bool isGameOver();
 };
 
 #endif // __GAME_LOGIC_HPP__
