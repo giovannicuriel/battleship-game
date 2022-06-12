@@ -3,7 +3,7 @@
 
 #include <event-broker/subscriber.hpp>
 #include <event-broker/event-broker.hpp>
-#include <gui/events.hpp>
+#include <event-broker/events.hpp>
 #include <logic/game-logic.hpp>
 
 class GameController: public Subscriber {

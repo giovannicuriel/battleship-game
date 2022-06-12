@@ -25,7 +25,7 @@ Cli::Cli(
 
 void Cli::run() {
     std::string command;
-    m_Field->generate(Dimension { 10, 10}, 4);
+    m_Field->generate(Area{ 0, 0, 10, 10}, 4);
     while (command != "exit") {
         command = m_Reader->readline();
         if (command == "") { continue; }

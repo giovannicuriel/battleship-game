@@ -4,8 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "gui/world/world-object.hpp"
-#include "gui/events.hpp"
+#include <gui/world/world-object.hpp>
 
 class World {
 protected:
@@ -13,8 +12,8 @@ protected:
 public:
     World();
     virtual ~World();
-    void addWorldObject(WorldObject * object);
-    void draw();
+    virtual void addWorldObject(WorldObject * object);
+    virtual void draw();
 };
 
 #endif //__WORLD_HPP__

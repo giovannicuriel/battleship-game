@@ -8,6 +8,7 @@ class MockSubscriptionHandler: public SubscriptionHandler {
 public:
     MOCK_METHOD(void, enqueueEvent, (Event *event), (override));
     MOCK_METHOD(Event *, dequeueEvent, (), (override));
+    MOCK_METHOD(void, processEvent, (Event* event), (override));
     MOCK_METHOD(void, addSubscriber, (Subscriber * subscriber), (override));
     ~MockSubscriptionHandler() { }
 };

@@ -1,12 +1,11 @@
 #ifndef __BOARD_TILE_HPP__
 #define __BOARD_TILE_HPP__
 
-#include "gui/types.hpp"
-#include "gui/world/world-object.hpp"
-#include <logic/types.hpp>
+#include <types.hpp>
+#include <gui/world/world-object.hpp>
+#include <types.hpp>
 
-enum BoardTileState
-{
+enum BoardTileState {
     IDLE,
     FADING_IN,
     FADING_OUT,
@@ -17,27 +16,24 @@ enum BoardTileState
 
 BoardTileState operator!(BoardTileState state);
 
-struct BoardTileConfig
-{
-    Gui::Point origin;
-    Gui::Size size;
-    ::Point coordinate;
+struct BoardTileConfig {
+    Area area;
+    Point coordinate;
 };
 
-class BoardTile : public WorldObject
-{
+class BoardTile : public WorldObject {
 protected:
     BoardTileState m_State;
-    Gui::Area m_Area;
-    Gui::Color m_Color;
-    ::Point m_Coordinate;
+    Area m_Area;
+    Color m_Color;
+    Point m_Coordinate;
     BombCount m_Count;
 public:
-    BoardTile(SDL_Renderer *renderer, BoardTileConfig config);
+    BoardTile(SdlAdapter* adapter, BoardTileConfig config);
     virtual ~BoardTile();
 
     void draw() override;
-    bool contains(Gui::Point point) override;
+    bool contains(Point point) override;
     void setState(BoardTileState state);
     void setSurroundingBombCount(BombCount count);
     ::Point getCoordinate() const;

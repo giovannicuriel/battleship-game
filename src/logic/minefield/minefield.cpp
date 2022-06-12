@@ -4,13 +4,13 @@
 Field::Field() {
 }
 
-void Field::generate(Dimension d, size_t nBombs) {
-    m_Dimension = d;
+void Field::generate(Area a, size_t nBombs) {
+    m_Area = a;
     m_Bombs.clear();
     for (size_t i = 0; i < nBombs; i++) {
         m_Bombs.push_back(Point {
-            Coordinate(rand() % d.x),
-            Coordinate(rand() % d.y)
+            Coordinate(rand() % a.w),
+            Coordinate(rand() % a.h)
         });
     }
 }
@@ -72,27 +72,12 @@ std::map<Point, int16_t> Field::sweep() const {
         result[b] = -1;
     }
 
-    for (Coordinate x = 0; x < m_Dimension.x; x++) {
-        for (Coordinate y = 0; y < m_Dimension.y; y++) {
+    for (Coordinate x = 0; x < m_Area.w; x++) {
+        for (Coordinate y = 0; y < m_Area.h; y++) {
             Point p = { x, y };
             if (result.contains(p)) { continue; }
             result[p] = countBombs(p);
         }
     }
     return result;
-}
-
-std::string Field::toString() const {
-    std::stringstream ss;
-    ss << "Dimensions: " << m_Dimension.toString() << "\n";
-    ss << "Bombs are: \n";
-    for (auto b: m_Bombs) {
-        ss << "   " << b.toString() << "\n";
-    }
-    return ss.str();
-}
-
-std::ostream& operator<<(std::ostream& out, const Field& obj) {
-    out << obj;
-    return out;
 }

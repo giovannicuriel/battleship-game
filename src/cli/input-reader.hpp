@@ -11,6 +11,7 @@ public:
     InputReader(std::istream* input);
     virtual std::string readline();
     virtual void readValue(short int& value);
+    virtual void readValue(int32_t& value);
 };
 
 #endif // __CLI_INPUT_READER_HPP__

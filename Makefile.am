@@ -5,9 +5,20 @@ clean_coverage:
 	rm -fr coverage*
 	find . -name "*.gcda" -delete
 coverage_init: clean_coverage check
-	lcov  --gcov-tool gcov-11 --initial --capture  --directory . --include "*src*"  --output-file coverage-base.info
+	lcov  --gcov-tool gcov-11 --initial --capture  --directory . \
+        --exclude "*src/adapters/*" \
+        --exclude "*src/main.cpp" \
+        --exclude "*src/utils.cpp" \
+        --include "*src*" \
+        --output-file coverage-base.info
 coverage: coverage_init check
-	lcov  --gcov-tool gcov-11 --capture  --directory . --include "*src*"  --output-file coverage.info
+	lcov  --gcov-tool gcov-11 --capture  --directory . \
+        --exclude "*src/adapters/*" \
+        --exclude "*src/main.cpp" \
+        --exclude "*src/utils.cpp" \
+        --exclude "*tests/*" \
+        --include "*src*" \
+        --output-file coverage.info
 	lcov --list coverage.info # debug info
 	genhtml coverage.info --output-directory coverage-results --demangle-cpp
 coverage_diff: coverage

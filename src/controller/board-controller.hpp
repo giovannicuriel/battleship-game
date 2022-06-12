@@ -13,7 +13,7 @@ protected:
     EventBroker* m_Broker;
     std::vector<BoardTile*> m_Tiles;
     Field m_Field;
-    void processMouseClickedEvent(const Gui::Point& point);
+    void processMouseClickedEvent(const Point& point);
 public:
     BoardController(EventBroker* broker);
     void addTilesTo(Window* window);

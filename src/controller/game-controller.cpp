@@ -1,7 +1,7 @@
 #include <iostream>
 #include <controller/game-controller.hpp>
 #include <event-broker/topics.hpp>
-#include <gui/events.hpp>
+#include <event-broker/events.hpp>
 
 GameController::GameController(EventBroker* broker):
     m_Broker(broker),

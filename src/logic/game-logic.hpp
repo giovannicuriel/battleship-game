@@ -1,7 +1,7 @@
 #ifndef __GAME_LOGIC_HPP__
 #define __GAME_LOGIC_HPP__
 
-#include <logic/types.hpp>
+#include <types.hpp>
 
 class GameLogic
 {
