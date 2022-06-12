@@ -41,8 +41,3 @@ bool Area::contains(Point p)
            (this->x + this->w) >= p.x &&
            (this->y + this->h) >= p.y;
 }
-
-bool operator<(const ::Point& lhs, const ::Point& rhs) {
-    return (lhs.x < rhs.x) || ((lhs.x == rhs.x) && (lhs.y < rhs.y));
-}
-
