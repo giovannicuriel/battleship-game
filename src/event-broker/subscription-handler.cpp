@@ -6,8 +6,8 @@ void SubscriptionHandlerImpl::eventLoop(SubscriptionHandlerImpl* handler) {
     handler->isRunning = true;
     while (handler->isRunning) {
         Event* event = handler->dequeueEvent();
-        if (event == nullptr) { 
-            continue; 
+        if (event == nullptr) {
+            continue;
         }
         for (auto& s: handler->subscribers) {
             s->processEvent(event);
@@ -62,4 +62,10 @@ Event* SubscriptionHandlerImpl::dequeueEvent() {
 
 void SubscriptionHandlerImpl::addSubscriber(Subscriber* subscriber) {
     subscribers.push_back(subscriber);
+}
+
+void SubscriptionHandlerImpl::processEvent(Event* event) {
+    for (auto& s: subscribers) {
+        s->processEvent(event);
+    }
 }

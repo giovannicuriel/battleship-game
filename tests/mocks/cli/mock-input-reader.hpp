@@ -10,6 +10,7 @@ public:
     MockInputReader(): InputReader(nullptr) { };
     MOCK_METHOD(std::string, readline, (), (override));
     MOCK_METHOD(void, readValue, (short int&), (override));
+    MOCK_METHOD(void, readValue, (int32_t&), (override));
     ~MockInputReader() { }
 };
 

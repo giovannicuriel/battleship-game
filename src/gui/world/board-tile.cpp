@@ -2,18 +2,12 @@
 
 #define COLOR_INCREMENT 25
 
-BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) :
-    WorldObject(renderer),
+BoardTile::BoardTile(SdlAdapter* adapter, BoardTileConfig config) :
+    WorldObject(adapter),
     m_Coordinate(config.coordinate),
-    m_Count(0)
-{
-    this->m_Area.rect = {
-        x : config.origin.x,
-        y : config.origin.y,
-        w : config.size.x,
-        h : config.size.y
-    };
-    this->m_Color.argb = {
+    m_Count(0) {
+    this->m_Area = config.area;
+    this->m_Color = {
         r : 0,
         g : 0,
         b : 255,
@@ -25,7 +19,7 @@ BoardTile::BoardTile(SDL_Renderer *renderer, BoardTileConfig config) :
 BoardTile::~BoardTile() {
 }
 
-bool BoardTile::contains(Gui::Point point) {
+bool BoardTile::contains(Point point) {
     return this->m_Area.contains(point);
 }
 
@@ -50,12 +44,8 @@ void BoardTile::draw()
         break;
     }
 
-    SDL_SetRenderDrawColor(this->m_Renderer,
-                           this->m_Color.argb.r,
-                           this->m_Color.argb.g,
-                           this->m_Color.argb.b,
-                           this->m_Color.argb.a);
-    SDL_RenderFillRect(this->m_Renderer, &this->m_Area.rect);
+    m_Sdl->setRenderDrawColor(this->m_Color);
+    m_Sdl->renderFillRect(this->m_Area);
 }
 
 BoardTileState operator!(BoardTileState state)
@@ -75,7 +65,7 @@ BoardTileState operator!(BoardTileState state)
     }
 }
 
-::Point BoardTile::getCoordinate() const {
+Point BoardTile::getCoordinate() const {
     return m_Coordinate;
 }
 

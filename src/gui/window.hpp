@@ -2,27 +2,25 @@
 #define __WINDOW_HPP__
 
 #include <iostream>
-#include <SDL.h>
-#include <gui/types.hpp>
 #include <gui/world/world.hpp>
+#include <adapters/sdl-adapter.hpp>
 
+/**
+ * These values might come from a config file.
+ */
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 400
 
-class Window
-{
+class Window {
 protected:
-    SDL_Window* m_Window;
-    SDL_Surface* m_ScreenSurface;
     World* m_World;
+    SdlAdapter* m_Sdl;
 public:
-    Window(World * world);
-    virtual ~Window();
-    void init();
-    void update();
-    void addObject(WorldObject* worldObj);
-
-    SDL_Renderer *m_Renderer;
+    Window(World * world, SdlAdapter* adapter);
+    virtual void init();
+    virtual void update();
+    virtual void addObject(WorldObject* worldObj);
+    virtual SdlAdapter* getSdlAdapter() { return m_Sdl; }
 };
 
 #endif // __WINDOW_HPP__

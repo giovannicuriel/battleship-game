@@ -15,6 +15,7 @@ public:
     virtual ~SubscriptionHandler() { };
     virtual void enqueueEvent(Event *event) = 0;
     virtual Event * dequeueEvent() = 0;
+    virtual void processEvent(Event* event) = 0;
     virtual void addSubscriber(Subscriber * subscriber) = 0;
 };
 
@@ -34,6 +35,7 @@ public:
     void stop();
     void enqueueEvent(Event *event);
     Event * dequeueEvent();
+    void processEvent(Event* event) override;
     void addSubscriber(Subscriber * subscriber);
 };
 

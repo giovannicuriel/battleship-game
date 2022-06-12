@@ -3,10 +3,10 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../mocks/subscription-handler-factory.hpp"
-#include "../mocks/subscription-handler.hpp"
-#include "../mocks/subscriber.hpp"
-#include "../mocks/event.hpp"
+#include "../mocks/event-broker/mock-subscription-handler-factory.hpp"
+#include "../mocks/event-broker/mock-subscription-handler.hpp"
+#include "../mocks/event-broker/mock-subscriber.hpp"
+#include "../mocks/event-broker/mock-event.hpp"
 
 using ::testing::Return;
 using ::testing::_;
@@ -84,3 +84,22 @@ TEST(EventBrokerTest, ShouldSuccessfullyPublish) {
     broker.publish(t, &mockEvent);
 }
 
+TEST(EventBrokerTest, ShouldSuccessfullyPublishSynchronously) {
+    MockSubscriptionHandler* mockSubscriptionHandler = new MockSubscriptionHandler();
+    MockSubscriptionHandlerFactory mockFactory;
+    MockSubscriber mockSubscriber;
+    MockEvent mockEvent;
+
+    EventBroker broker { &mockFactory };
+
+    EXPECT_CALL(*mockSubscriptionHandler, addSubscriber(_))
+        .Times(1);
+    EXPECT_CALL(mockFactory, build())
+        .Times(1)
+        .WillRepeatedly(Return(mockSubscriptionHandler));
+    EXPECT_CALL(*mockSubscriptionHandler, processEvent(_))
+        .Times(1);
+    Topic t("sample-topic");
+    broker.subscribe(t, &mockSubscriber);
+    broker.publishSync(t, &mockEvent);
+}

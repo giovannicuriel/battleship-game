@@ -4,10 +4,10 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-#include "../mocks/subscription-handler-factory.hpp"
-#include "../mocks/subscription-handler.hpp"
-#include "../mocks/subscriber.hpp"
-#include "../mocks/event.hpp"
+#include "../mocks/event-broker/mock-subscription-handler-factory.hpp"
+#include "../mocks/event-broker/mock-subscription-handler.hpp"
+#include "../mocks/event-broker/mock-subscriber.hpp"
+#include "../mocks/event-broker/mock-event.hpp"
 
 using ::testing::Return;
 using ::testing::_;
@@ -33,6 +33,18 @@ TEST(SubscriptionHandlerTest, ShouldSuccessfullyProcessAnEvent) {
         .Times(1);
     handler.addSubscriber(&mockSubscriber);
     handler.enqueueEvent(event);
+    handler.stop();
+}
+
+TEST(SubscriptionHandlerTest, ShouldSuccessfullyProcessAnEventSynchronously) {
+    SubscriptionHandlerImpl handler;
+    MockSubscriber mockSubscriber;
+    MockEvent* event = new MockEvent();
+
+    EXPECT_CALL(mockSubscriber, processEvent(_))
+        .Times(1);
+    handler.addSubscriber(&mockSubscriber);
+    handler.processEvent(event);
     handler.stop();
 }
 

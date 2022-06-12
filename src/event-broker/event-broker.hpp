@@ -22,8 +22,9 @@ public:
     );
     virtual ~EventBroker();
 
-    void subscribe(Topic topic, Subscriber* subscriber);
-    void publish(Topic topic, Event* event);
+    virtual void subscribe(Topic topic, Subscriber* subscriber);
+    virtual void publish(Topic topic, Event* event);
+    virtual void publishSync(Topic topic, Event* event);
 };
 
 

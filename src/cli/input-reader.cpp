@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cli/input-reader.hpp>
 
-InputReader::InputReader(std::istream* input): m_Input(input) { } 
+InputReader::InputReader(std::istream* input): m_Input(input) { }
 
 std::string InputReader::readline() {
     std::string text;
@@ -9,6 +9,10 @@ std::string InputReader::readline() {
     return text;
 }
 
-void InputReader::readValue(short int& value) { 
+void InputReader::readValue(short int& value) {
+    (*m_Input) >> value;
+}
+
+void InputReader::readValue(int32_t& value) {
     (*m_Input) >> value;
 }
