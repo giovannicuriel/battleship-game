@@ -3,20 +3,37 @@
 #include <gui/world/board-tile.hpp>
 #include <event-broker/events.hpp>
 #include <event-broker/topics.hpp>
+#include <utils.hpp>
 
-BoardController::BoardController(EventBroker* broker):
-    m_Broker(broker) {
+BoardController::BoardController(
+        EventBroker* broker,
+        Field* field,
+        BoardControllerConfig config,
+        EventFactory* eventFactory
+    ):
+    m_Broker(broker),
+    m_Field(field),
+    m_Config(config),
+    m_EventFactory(eventFactory) {
 }
 
 /**
  * Maybe, just maybe, window should not be here.
  */
 void BoardController::addTilesTo(Window* window) {
-    m_Field.generate(Area { 0, 0, 8, 8}, 14);
-    for (short int x = 0; x < 8; x++) {
-        for (short int y = 0; y < 8; y++) {
+    m_Field->generate(
+        Area { 0, 0, m_Config.boardSize.x, m_Config.boardSize.y },
+        m_Config.nBombs
+    );
+    for (short int x = 0; x < m_Config.boardSize.x; x++) {
+        for (short int y = 0; y < m_Config.boardSize.y; y++) {
             BoardTile *tile = new BoardTile(window->getSdlAdapter(), {
-                area : Area({x : x * 50, y : y * 50, w : 50, h : 50}),
+                area : Area {
+                    x : x * m_Config.tileSize.x,
+                    y : y * m_Config.tileSize.y,
+                    w : m_Config.tileSize.x,
+                    h : m_Config.tileSize.y
+                },
                 coordinate: Point({x: x, y: y})
             });
             m_Tiles.push_back(tile);
@@ -36,16 +53,20 @@ void BoardController::processEvent(Event* event) {
 }
 
 void BoardController::processMouseClickedEvent(const Point& point) {
-    std::map<::Point, BombCount> result;
+    std::map<Point, BombCount> result;
     for (auto tile: m_Tiles) {
+        std::cout << "Testing tile at " << tile->getCoordinate() << "\n";
+        std::cout << ">>> Does it contains point " << point << "? " << tile->contains(point) << "\n";
         if (tile->contains(point)) {
             Point tileCoordinate = tile->getCoordinate();
-            result = m_Field.probe(tileCoordinate);
+            result = m_Field->probe(tileCoordinate);
+            Event* event;
             if (result[tileCoordinate] == -1) {
-                m_Broker->publish(GAME_EVENTS_TOPIC, new GameEvent { type: BOMB_BLOWN_UP });
+                event = m_EventFactory->buildGameEvent(BOMB_BLOWN_UP);
             } else {
-                m_Broker->publish(GAME_EVENTS_TOPIC, new GameEvent { type: AREA_CLEARED });
+                event = m_EventFactory->buildGameEvent(AREA_CLEARED);
             }
+            m_Broker->publish(GAME_EVENTS_TOPIC, event);
             break;
         }
     }

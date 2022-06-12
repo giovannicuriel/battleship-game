@@ -39,6 +39,6 @@ void EventBroker::publish(Topic topic, Event* event) {
 
 void EventBroker::publishSync(Topic topic, Event* event) {
     if (m_SubscriptionHandlers.contains(topic)) {
-        m_SubscriptionHandlers[topic]->enqueueEvent(event);
+        m_SubscriptionHandlers[topic]->processEvent(event);
     }
 }

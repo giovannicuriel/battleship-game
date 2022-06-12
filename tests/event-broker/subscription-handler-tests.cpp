@@ -36,6 +36,18 @@ TEST(SubscriptionHandlerTest, ShouldSuccessfullyProcessAnEvent) {
     handler.stop();
 }
 
+TEST(SubscriptionHandlerTest, ShouldSuccessfullyProcessAnEventSynchronously) {
+    SubscriptionHandlerImpl handler;
+    MockSubscriber mockSubscriber;
+    MockEvent* event = new MockEvent();
+
+    EXPECT_CALL(mockSubscriber, processEvent(_))
+        .Times(1);
+    handler.addSubscriber(&mockSubscriber);
+    handler.processEvent(event);
+    handler.stop();
+}
+
 TEST(SubscriptionHandlerTest, ShouldSuccessfullyProcessANullEvent) {
     SubscriptionHandlerImpl handler;
     MockSubscriber mockSubscriber;

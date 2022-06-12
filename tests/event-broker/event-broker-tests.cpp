@@ -84,3 +84,22 @@ TEST(EventBrokerTest, ShouldSuccessfullyPublish) {
     broker.publish(t, &mockEvent);
 }
 
+TEST(EventBrokerTest, ShouldSuccessfullyPublishSynchronously) {
+    MockSubscriptionHandler* mockSubscriptionHandler = new MockSubscriptionHandler();
+    MockSubscriptionHandlerFactory mockFactory;
+    MockSubscriber mockSubscriber;
+    MockEvent mockEvent;
+
+    EventBroker broker { &mockFactory };
+
+    EXPECT_CALL(*mockSubscriptionHandler, addSubscriber(_))
+        .Times(1);
+    EXPECT_CALL(mockFactory, build())
+        .Times(1)
+        .WillRepeatedly(Return(mockSubscriptionHandler));
+    EXPECT_CALL(*mockSubscriptionHandler, processEvent(_))
+        .Times(1);
+    Topic t("sample-topic");
+    broker.subscribe(t, &mockSubscriber);
+    broker.publishSync(t, &mockEvent);
+}

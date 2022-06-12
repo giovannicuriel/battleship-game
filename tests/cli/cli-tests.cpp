@@ -14,6 +14,16 @@ using ::testing::Return;
 using ::testing::_;
 using ::testing::A;
 
+class ChildCli: public Cli {
+public:
+ChildCli(
+        PatriciaTree<Node<CliCommand*, StringKeySpec>>* tree,
+        Field* field,
+        CliCommandBuilder* builder,
+        InputReader* inputReader
+    ): Cli(tree, field, builder, inputReader) { };
+};
+
 TEST(InputReaderTest, ShouldBuildAReader) {
     std::ifstream ifs;
     ifs.open("./cli/should-build-a-reader-test.txt", std::ifstream::in);
@@ -30,11 +40,21 @@ TEST(InputReaderTest, ShouldReadAFullLine) {
     ifs.close();
 }
 
-TEST(InputReaderTest, ShouldReadAnIntegerValue) {
+TEST(InputReaderTest, ShouldReadAShortIntegerValue) {
     std::ifstream ifs;
     ifs.open("./cli/should-read-an-integer-test.txt", std::ifstream::in);
     InputReader reader(&ifs);
     short int result = 0;
+    reader.readValue(result);
+    EXPECT_EQ(result, 13);
+    ifs.close();
+}
+
+TEST(InputReaderTest, ShouldReadAnIntegerValue) {
+    std::ifstream ifs;
+    ifs.open("./cli/should-read-an-integer-test.txt", std::ifstream::in);
+    InputReader reader(&ifs);
+    int32_t result = 0;
     reader.readValue(result);
     EXPECT_EQ(result, 13);
     ifs.close();
@@ -60,6 +80,9 @@ TEST(CliTest, ShouldBuildACli) {
         .WillRepeatedly(Return(CliCommandNode { "sample", mockCommand }));
 
     Cli cli { &mockCommandTree, &mockField, &builder, &mockReader };
+
+    /** testing .2 created constructors */
+    ChildCli childCli { &mockCommandTree, &mockField, &builder, &mockReader };
 }
 
 TEST(CliTest, ShouldRunACommandSuccessfully) {
@@ -122,6 +145,13 @@ TEST(CommandBuilderTest, ShouldBuildABuilder) {
     );
 }
 
+struct ChildPrintHelpCommand: public PrintHelpCommand {
+public:
+    ChildPrintHelpCommand(PatriciaTree<Node<CliCommand*, StringKeySpec>> *tree): PrintHelpCommand(tree) {
+
+    };
+};
+
 TEST(CommandBuilderTest, ShouldBuildPrintHelpCommand) {
     MockInputReader mockReader;
     MockField mockField;
@@ -140,8 +170,14 @@ TEST(CommandBuilderTest, ShouldBuildPrintHelpCommand) {
     node.command->execute();
 
     EXPECT_EQ(node.key, "print help");
+
+    ChildPrintHelpCommand command(&mockCommandTree);
 }
 
+struct ChildCreateMinefieldCommand: public CreateMinefieldCommand {
+public:
+    ChildCreateMinefieldCommand(Field * field): CreateMinefieldCommand(field) { };
+};
 TEST(CommandBuilderTest, ShouldBuildCreateMinefieldCommand) {
     MockInputReader mockReader;
     MockField mockField;
@@ -159,8 +195,13 @@ TEST(CommandBuilderTest, ShouldBuildCreateMinefieldCommand) {
     node.command->execute();
 
     EXPECT_EQ(node.key, "minefield create");
+    ChildCreateMinefieldCommand command(&mockField);
 }
 
+struct ChildPrintMinefieldCommand: public PrintMinefieldCommand {
+public:
+    ChildPrintMinefieldCommand(Field * field): PrintMinefieldCommand(field) { };
+};
 TEST(CommandBuilderTest, ShouldBuildPrintMinefieldCommand) {
     MockInputReader mockReader;
     MockField mockField;
@@ -175,8 +216,13 @@ TEST(CommandBuilderTest, ShouldBuildPrintMinefieldCommand) {
     node.command->execute();
 
     EXPECT_EQ(node.key, "minefield print");
+    ChildPrintMinefieldCommand command(&mockField);
 }
 
+struct ChildProbeMinefieldCommand: public ProbeMinefieldCommand {
+public:
+    ChildProbeMinefieldCommand(Field * field, InputReader* reader): ProbeMinefieldCommand(field, reader) { };
+};
 TEST(CommandBuilderTest, ShouldBuildProbeMinefieldCommand) {
     MockInputReader mockReader;
     MockField mockField;
@@ -202,9 +248,13 @@ TEST(CommandBuilderTest, ShouldBuildProbeMinefieldCommand) {
     node.command->execute();
 
     EXPECT_EQ(node.key, "probe");
+    ChildProbeMinefieldCommand command(&mockField, &mockReader);
 }
 
-
+struct ChildSweepMinefieldCommand: public SweepMinefieldCommand {
+public:
+    ChildSweepMinefieldCommand(Field * field): SweepMinefieldCommand(field) { };
+};
 TEST(CommandBuilderTest, ShouldBuildSweepMinefieldCommand) {
     MockInputReader mockReader;
     MockField mockField;
@@ -227,6 +277,7 @@ TEST(CommandBuilderTest, ShouldBuildSweepMinefieldCommand) {
     node.command->execute();
 
     EXPECT_EQ(node.key, "sweep");
+    ChildSweepMinefieldCommand command(&mockField);
 }
 
 

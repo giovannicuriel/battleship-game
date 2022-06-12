@@ -3,7 +3,7 @@
 
 #include <types.hpp>
 
-struct Event { };
+struct Event {};
 
 enum MouseEventType {
     MOUSE_ENTERED,
@@ -11,7 +11,7 @@ enum MouseEventType {
     MOUSE_CLICKED
 };
 
-struct MouseEvent : public Event {
+struct MouseEvent: public Event {
     MouseEventType type;
     Point point;
 };
@@ -31,6 +31,26 @@ struct SimpleEvent: public Event {
 };
 
 struct RefreshWindowEvent: public Event { };
+
+class EventFactory {
+public:
+    virtual Event* buildEmptyEvent() {
+        return new Event();
+    };
+    virtual Event* buildMouseEvent(MouseEventType type, Point point) {
+        return new MouseEvent { type: type, point: point };
+    };
+    virtual Event* buildGameEvent(GameEventType type) {
+        return new GameEvent { type: type };
+    };
+    virtual Event* buildSimpleEvent(std::string message) {
+        return new SimpleEvent { message: message };
+    };
+    virtual Event* buildRefreshWindowEvent() {
+        return new RefreshWindowEvent();
+    };
+};
+
 
 
 #endif // _EVENTS_HPP__
