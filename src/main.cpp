@@ -1,23 +1,42 @@
-// #include <controller/window-controller.hpp>
-// #include <controller/board-controller.hpp>
-// #include <controller/game-controller.hpp>
-// #include <gui/world/world.hpp>
-// #include <event-broker/event-broker.hpp>
-// #include <event-broker/subscription-handler-factory.hpp>
-// #include <event-broker/topics.hpp>
-// #include <adapters/sdl-adapter-impl.hpp>
+#include <controller/window-controller.hpp>
+#include <controller/board-controller.hpp>
+#include <controller/game-controller.hpp>
+#include <gui/world/world.hpp>
+#include <event-broker/event-broker.hpp>
+#include <event-broker/subscription-handler-factory.hpp>
+#include <event-broker/topics.hpp>
+#include <adapters/sdl-adapter-impl.hpp>
+#include <logic/minefield/minefield.hpp>
+#include <event-broker/events.hpp>
 
 int main(void) {
-    // SubscriptionHandlerFactoryImpl factory;
-    // EventBroker broker(&factory);
-    // World world;
-    // SdlAdapterImpl sdl(&broker);
-    // WindowController app(&world, &broker, &sdl);
-    // GameController gameController(&broker);
-    // BoardController boardController(&broker);
+    // Event-related classes
+    SubscriptionHandlerFactoryImpl factory;
+    EventBroker broker(&factory);
 
-    // boardController.addTilesTo(&app.getWindow());
-    // boardController.start();
-    // app.start();
+    // Game related classes
+    SdlAdapterImpl sdl(&broker);
+    World world;
+    WindowController app(&world, &broker, &sdl);
+    GameController gameController(&broker);
+    Field field;
+    BoardControllerConfig config = {
+        {8, 8},
+        10,
+        {50, 50}
+    };
+
+    EventFactory eventFactory;
+    BoardController boardController(
+        &broker,
+        &field,
+        config,
+        &eventFactory
+    );
+
+    boardController.addTilesTo(&app.getWindow());
+    gameController.start();
+    boardController.start();
+    app.start();
     return 0;
 }

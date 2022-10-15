@@ -25,3 +25,8 @@ std::ostream& operator<<(std::ostream& out, const Field& obj) {
     }
     return out;
 }
+
+std::ostream& operator<<(std::ostream& out, const Color& c) {
+    out << "(" << (int)c.r << ", " << (int)c.g << ", " << (int)c.b << "|" << (int)c.a << ")";
+    return out;
+}

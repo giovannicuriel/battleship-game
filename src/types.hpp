@@ -23,6 +23,7 @@ struct Area {
     int32_t w, h;
     bool contains(Point p);
 };
+std::ostream& operator<<(std::ostream& out, const Area& c);
 
 struct Color {
     uint8_t r;

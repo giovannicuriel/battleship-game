@@ -32,8 +32,12 @@ struct SimpleEvent: public Event {
 
 struct RefreshWindowEvent: public Event { };
 
+/**
+ * Maybe all these functions might have the same name.
+ */
 class EventFactory {
 public:
+
     virtual Event* buildEmptyEvent() {
         return new Event();
     };
