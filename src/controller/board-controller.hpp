@@ -2,7 +2,7 @@
 #define __BOARD_TILE_CONTROLLER_HPP__
 
 #include <vector>
-#include "event-broker/event-broker.hpp"
+#include <event-broker/event-broker.hpp>
 #include <event-broker/subscriber.hpp>
 #include <gui/window.hpp>
 #include <gui/world/board-tile.hpp>

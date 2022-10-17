@@ -7,6 +7,7 @@
 
 std::ostream& operator<<(std::ostream& out, const Point& p);
 std::ostream& operator<<(std::ostream& out, const Area& area);
+std::ostream& operator<<(std::ostream& out, const Color& color);
 std::ostream& operator<<(std::ostream& out, const std::map<Point, BombCount>& result);
 std::ostream& operator<<(std::ostream& out, const Field& obj);
 
