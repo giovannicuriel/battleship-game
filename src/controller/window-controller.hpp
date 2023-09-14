@@ -1,7 +1,6 @@
 #ifndef __WINDOW_CONTROLLER_HPP__
 #define __WINDOW_CONTROLLER_HPP__
 
-#include <gui/world/world.hpp>
 #include <gui/window.hpp>
 #include <event-broker/event-broker.hpp>
 #include <adapters/sdl-adapter.hpp>
@@ -12,7 +11,7 @@ protected:
     EventBroker* m_EventBroker;
     SdlAdapter* m_Sdl;
 public:
-    WindowController(World* world, EventBroker* broker, SdlAdapter* sdlAdapter);
+    WindowController(EventBroker* broker, SdlAdapter* sdlAdapter);
     void start();
 
     Window& getWindow();

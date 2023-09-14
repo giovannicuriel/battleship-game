@@ -8,18 +8,18 @@ endif
 
 libbattleship_a_SOURCES = \
     types.cpp \
-    utils.cpp \
-    adapters/sdl-adapter-impl.cpp \
     event-broker/event-broker.cpp \
     event-broker/subscription-handler-factory.cpp \
     event-broker/subscription-handler.cpp \
+    adapters/sdl-adapter-impl.cpp \
     controller/window-controller.cpp \
+    gui/window.cpp \
+    #utils.cpp \
     controller/board-controller.cpp \
     controller/game-controller.cpp \
     logic/game-logic.cpp \
     logic/minefield/minefield.cpp \
     cli/cli.cpp \
-    gui/window.cpp \
     gui/world/world-object.cpp \
     gui/world/board-tile.cpp \
     gui/world/world.cpp \

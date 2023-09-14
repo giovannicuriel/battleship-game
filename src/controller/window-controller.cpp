@@ -1,8 +1,8 @@
 #include <controller/window-controller.hpp>
 #include <event-broker/topics.hpp>
 
-WindowController::WindowController(World* world, EventBroker* broker, SdlAdapter* adapter):
-    m_Window(world, adapter),
+WindowController::WindowController(EventBroker* broker, SdlAdapter* adapter):
+    m_Window(adapter),
     m_EventBroker(broker),
     m_Sdl(adapter) {
     m_Window.init();
