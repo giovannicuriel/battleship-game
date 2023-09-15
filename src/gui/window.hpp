@@ -7,8 +7,8 @@
 /**
  * These values might come from a config file.
  */
-#define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 400
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 800
 
 class Window {
 protected:

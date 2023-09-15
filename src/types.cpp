@@ -26,6 +26,15 @@ Color &Color::operator-=(std::vector<u_int8_t> v)
     this->a = (this->a >= v[3] ? this->a - v[3] : 0);
     return *this;
 }
+
+bool Color::operator==(const Color& other) {
+  return (this->r == other.r) && (this->g == other.g) && (this->b == other.b) && (this->a == other.a);
+}
+
+std::ostream& operator<<(std::ostream& out, const Color& c) {
+  out << "[" << (uint32_t)c.r << "," << (uint32_t)c.g << "," << (uint32_t)c.b << "|" << (uint32_t)c.a << "]";
+  return out;
+}
 void Color::copyFrom(std::vector<u_int8_t> v)
 {
     this->r = v[0];

@@ -11,6 +11,7 @@ protected:
     SDL_Renderer* m_Renderer;
     SDL_Window* m_Window;
     EventBroker* m_EventBroker;
+    SDL_Texture *display;
 public:
     SdlAdapterImpl(EventBroker* eventBroker);
     virtual ~SdlAdapterImpl();

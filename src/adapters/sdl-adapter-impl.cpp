@@ -40,8 +40,14 @@ void SdlAdapterImpl::createWindow(const char *title, Area area) {
     this->m_Renderer = SDL_CreateRenderer(
        this->m_Window,
        -1,
-       SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+       SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE
     );
+
+    SDL_SetRenderDrawBlendMode(this->m_Renderer, SDL_BLENDMODE_BLEND);
+    /* Create texture for display */
+    this->display = SDL_CreateTexture(this->m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, area.w, area.h);
+
+    SDL_SetRenderTarget(this->m_Renderer, this->display);
 };
 
 void SdlAdapterImpl::clearRenderer() {
@@ -50,7 +56,10 @@ void SdlAdapterImpl::clearRenderer() {
 }
 
 void SdlAdapterImpl::render() {
+    SDL_SetRenderTarget(this->m_Renderer, NULL);
+    SDL_RenderCopy(this->m_Renderer, this->display, NULL, NULL);
     SDL_RenderPresent(this->m_Renderer);
+    SDL_SetRenderTarget(this->m_Renderer, this->display);
 }
 
 void SdlAdapterImpl::start() {
@@ -77,7 +86,7 @@ void SdlAdapterImpl::start() {
             }
         }
         m_EventBroker->publishSync(SYSTEM_EVENTS_TOPIC, new RefreshWindowEvent());
-        SDL_Delay(1000 / 10);
+        // SDL_Delay(1000 / 10);
     }
 }
 

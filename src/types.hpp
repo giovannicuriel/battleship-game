@@ -32,7 +32,9 @@ struct Color {
     uint8_t a;
     Color &operator+=(std::vector<u_int8_t> v);
     Color &operator-=(std::vector<u_int8_t> v);
+    bool operator==(const Color& other);
     void copyFrom(std::vector<u_int8_t> v);
 };
+std::ostream& operator<<(std::ostream& out, const Color& c);
 
 #endif //__DIMENSION_HPP__
