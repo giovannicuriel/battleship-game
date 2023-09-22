@@ -12,6 +12,8 @@ protected:
     SDL_Window* m_Window;
     EventBroker* m_EventBroker;
     SDL_Texture *display;
+    bool shouldExit;
+    static void refresh(void* obj);
 public:
     SdlAdapterImpl(EventBroker* eventBroker);
     virtual ~SdlAdapterImpl();

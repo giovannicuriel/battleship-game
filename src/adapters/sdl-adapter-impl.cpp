@@ -3,6 +3,7 @@
 #include <event-broker/topics.hpp>
 #include <event-broker/events.hpp>
 #include <types.hpp>
+#include <unistd.h>
 
 SdlAdapterImpl::SdlAdapterImpl(EventBroker* eventBroker):
     m_EventBroker(eventBroker) {
@@ -62,32 +63,54 @@ void SdlAdapterImpl::render() {
     SDL_SetRenderTarget(this->m_Renderer, this->display);
 }
 
+void SdlAdapterImpl::refresh(void* obj) {
+    SdlAdapterImpl *reference = (SdlAdapterImpl *)obj;
+    RefreshWindowEvent refreshEvent;
+
+    int lastTicks = SDL_GetTicks();
+    int currTicks = 0;
+    int diff = 0;
+    int desiredFps = 27;
+    while (!reference->shouldExit) {
+        currTicks = SDL_GetTicks();
+        diff = currTicks - lastTicks;
+        if (diff < 1000 / desiredFps) {
+            SDL_Delay(1);
+        } else {
+            lastTicks = SDL_GetTicks();
+            reference->m_EventBroker->publishSync(SYSTEM_EVENTS_TOPIC, &refreshEvent);
+        }
+    }
+}
+
 void SdlAdapterImpl::start() {
-    bool shouldExit = false;
+    this->shouldExit = false;
     SDL_Event event;
+    MouseEvent mouseEvent;
+    std::thread refresherThread = std::thread(SdlAdapterImpl::refresh, this);
     while (!shouldExit) {
         while (SDL_PollEvent(&event) != 0) {
             switch (event.type) {
             case SDL_QUIT:
-                shouldExit = true;
+                this->shouldExit = true;
                 break;
             case SDL_WINDOW_MOUSE_FOCUS:
-                m_EventBroker->publish(MOUSE_EVENTS_TOPIC, new MouseEvent {
-                    type: MOUSE_ENTERED,
-                    point: { x : event.motion.x, y: event.motion.y }
-                });
+                mouseEvent.type = MOUSE_ENTERED;
+                mouseEvent.point.x = event.motion.x;
+                mouseEvent.point.y = event.motion.y;
+                m_EventBroker->publish(MOUSE_EVENTS_TOPIC, &mouseEvent);
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                m_EventBroker->publish(MOUSE_EVENTS_TOPIC, new MouseEvent {
-                    type: MOUSE_CLICKED,
-                    point: { x : event.motion.x, y: event.motion.y }
-                });
+                mouseEvent.type = MOUSE_CLICKED;
+                mouseEvent.point.x = event.motion.x;
+                mouseEvent.point.y = event.motion.y;
+                m_EventBroker->publish(MOUSE_EVENTS_TOPIC, &mouseEvent);
                 break;
             }
         }
-        m_EventBroker->publishSync(SYSTEM_EVENTS_TOPIC, new RefreshWindowEvent());
-        // SDL_Delay(1000 / 10);
+        SDL_Delay(100);
     }
+    refresherThread.join();
 }
 
 void SdlAdapterImpl::setRenderDrawColor(Color color) {
